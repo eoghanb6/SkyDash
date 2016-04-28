@@ -5,9 +5,7 @@ using System.Web;
 
 namespace SkyDash.Skyscape.Response
 {
-    public class VM
+    public class Backups
     {
-       //[Json("vapps")]
-        public List<VApps> VirtualApps { get; set; }
     }
 }

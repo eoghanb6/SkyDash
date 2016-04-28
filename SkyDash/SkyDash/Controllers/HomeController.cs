@@ -31,11 +31,12 @@ namespace SkyDash.Controllers
             request.AddHeader("content-type", "application/json");
             request.AddParameter("application/json", "{\n    \"email\": \"" + Config.email + "\",\n\"password\": \"" + Config.password + "\"\n}", ParameterType.RequestBody);
             IRestResponse response2 = client.Execute(request);
-            ViewBag.response2 = response2.Content;
+           // ViewBag.response2 = response2.Content;
 
-            //VM nicePrettyObject = JsonConvert.DeserializeObject<VM>(response2.Content);
-
-            //List<VM> vms = new List<VM>();
+            VM nicePrettyObject = JsonConvert.DeserializeObject<VM>(response2.Content);
+            ViewBag.response2 = nicePrettyObject;
+            List<VM> vms = new List<VM>();
+            ViewBag.nicePrettyObject = vms;
 
             //var thingsCostingMoreThan100 = vms.Where(x => x.Price > 100);
 
