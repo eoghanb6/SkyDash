@@ -2,8 +2,11 @@
 
 namespace SkyDash.Skyscape.Response
 {
-    public class VApps
+    public class VApp
     {
         public Dictionary<string, VM> Items { get; set; }
+
+        //[Json("vapps")]
+        public List<VApp> VirtualApps { get; set; }
     }
 }

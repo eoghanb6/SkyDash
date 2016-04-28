@@ -7,7 +7,9 @@ namespace SkyDash.Skyscape.Response
 {
     public class VM
     {
-       //[Json("vapps")]
-        public List<VApps> VirtualApps { get; set; }
+        public int id { get; set; }
+        public String name { get; set; }
+        public String last_backup_status { get; set; }
+        public Backup backups { get; set; }
     }
 }

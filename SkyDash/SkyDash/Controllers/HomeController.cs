@@ -23,27 +23,41 @@ namespace SkyDash.Controllers
             request.AddParameter("application/json", "{\n    \"email\": \"" + Config.email + "\",\n\"password\": \"" + Config.password + "\"\n}", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
             ViewBag.response = response.Content;
-
             
+            request = new RestRequest("accounts", Method.GET);
+            request.AddHeader("postman-token", "57452f76-6ac1-bd26-4db6-5ac23611e722");
+            request.AddHeader("cache-control", "no-cache");
+            request.AddHeader("content-type", "application/json");
+            request.AddParameter("application/json", "{\n    \"email\": \"j.moore@kainos.com\",\n\"password\": \"Hungryhungryhippos9!\"\n}", ParameterType.RequestBody);
+            IRestResponse response3 = client.Execute(request);
+
             request = new RestRequest("my_vm", Method.GET);
             request.AddHeader("postman-token", "124fc3f6-f149-1dac-9726-6b5c271db8ee");
             request.AddHeader("cache-control", "no-cache");
             request.AddHeader("content-type", "application/json");
             request.AddParameter("application/json", "{\n    \"email\": \"" + Config.email + "\",\n\"password\": \"" + Config.password + "\"\n}", ParameterType.RequestBody);
             IRestResponse response2 = client.Execute(request);
-           // ViewBag.response2 = response2.Content;
+            //ViewBag.response2 = response2.Content;
+
+            Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(response.Content);
 
             VM nicePrettyObject = JsonConvert.DeserializeObject<VM>(response2.Content);
             ViewBag.response2 = nicePrettyObject;
             List<VM> vms = new List<VM>();
-            ViewBag.nicePrettyObject = vms;
+            ViewBag.nicePrettyObject = values;
+
+            Account fish = JsonConvert.DeserializeObject<Account>(response3.Content);
+            ViewBag.response3 = fish.name;
+
+
+
 
             //var thingsCostingMoreThan100 = vms.Where(x => x.Price > 100);
 
             //var totalCostPerMonth = vms.Sum(x => x.Price);
 
             // LINQ
-            
+
 
 
             return View();

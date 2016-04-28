@@ -5,7 +5,9 @@ using System.Web;
 
 namespace SkyDash.Skyscape.Response
 {
-    public class Backups
+    public class Account
     {
+        public int id { get; set; }
+        public String name { get; set; }
     }
 }
