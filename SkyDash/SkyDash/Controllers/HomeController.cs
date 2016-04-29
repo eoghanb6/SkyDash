@@ -12,10 +12,7 @@ namespace SkyDash.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Login()
-        {
-
-        }
+      
         public ActionResult Index()
         {
             var authenticate = APIMethods.authenticate(Config.email, Config.password);
@@ -24,23 +21,16 @@ namespace SkyDash.Controllers
 
             ViewBag.response = authenticate.Content;
             APIMethods.client.CookieContainer = new System.Net.CookieContainer();
-                        
+
             //ViewBag.response2 = response2.Content;
 
-            Dictionary<string, string> values = JsonConvert.DeserializeObject<Dictionary<string, string>>(accounts.Content);
+            //Account(VMs,Vapps)
 
-            VM nicePrettyObject = JsonConvert.DeserializeObject<VM>(accounts.Content);
-            ViewBag.response2 = nicePrettyObject;
-            List<VM> listVms = new List<VM>();
-            ViewBag.nicePrettyObject = values;
+            // VDCs (List of VDCs)>>VDC(List of VMs)>>VM(VM Details)>>Backup(Backup Details)
 
-            Account fish = JsonConvert.DeserializeObject<Account>(vms.Content);
-            ViewBag.response3 = fish.name;
+
+            // VDCs (List of VDCs)>>VDC(List of Vapps)>>Vapp(Vapp Details)
                         
-            //var thingsCostingMoreThan100 = vms.Where(x => x.Price > 100);
-
-            //var totalCostPerMonth = vms.Sum(x => x.Price);
-
             // LINQ
 
 

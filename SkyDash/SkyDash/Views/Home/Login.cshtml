@@ -1,14 +1,14 @@
-﻿<h2>Login </h2>
-<h3>@ViewBag.Message</h3>
+﻿<h1>SkyDash</h1>
+<img src=".\SkyDash\SkyDash\Views\HomeEoghan.PNG" />
+<h2>Login using your Skyscape credentials</h2>
+<h3>Username: </h3>
+<input type="text" id="username" />
+<h3>Password: </h3>
+<input type="text" id="password" />
+<input type="submit" id="submit" onclick="storeCreds()" />
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+@helper storeCreds()
+{
+Config.email = Request.Form["username"];
+Config.password = Request.Form["password"];
+}
