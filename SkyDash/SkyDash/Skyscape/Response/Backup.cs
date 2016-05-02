@@ -1,17 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Newtonsoft.Json;
 
-namespace SkyDash.Skyscape.Response
+namespace Skydash.Response
 {
     public class Backup
     {
-        public String status { get; set; }
-        public String backup_slot { get; set; }
-        public String backup_start { get; set; }
-        public String backup_end { get; set; }
-        public String snapshot_removal_start { get; set; }
-        public String snapshot_removal_end { get; set; }
+        [JsonProperty("status")]
+        public string Status { get; set; }
+
+        [JsonProperty("backup_slot")]
+        public string BackupSlot { get; set; }
+
+        [JsonProperty("backup_start")]
+        public string BackupStart { get; set; }
+
+        [JsonProperty("backup_end")]
+        public string BackupEnd { get; set; }
+
+        [JsonProperty("snapshot_removal_start")]
+        public string SnapshotRemovalStart { get; set; }
+
+        [JsonProperty("snapshot_removal_end")]
+        public string SnapshotRemovalEnd { get; set; }
     }
 }
