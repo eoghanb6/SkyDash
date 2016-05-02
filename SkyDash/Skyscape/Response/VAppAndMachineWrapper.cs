@@ -6,7 +6,7 @@ namespace Skydash.Response
     public class VAppAndMachineWrapper
     {
         [JsonProperty("vapps")]
-        public List<Dictionary<string, List<VirtualApp>>> VirtualApps { get; set; }
+        public List<Dictionary<string, List<VirtualApp>>> VDCs { get; set; }
 
         [JsonProperty("vms")]
         public List<Dictionary<string, List<VirtualMachine>>> VirtualMachines { get; set; }

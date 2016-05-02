@@ -5,24 +5,59 @@ using System.Web;
 using System.Web.Mvc;
 using RestSharp;
 using Newtonsoft.Json;
-using SkyDash.Skyscape.Response;
 using SkyDash.Skyscape;
+using Skydash.Response;
+using System.IO;
+using RestSharp.Deserializers;
+using SkyDash.ViewModels;
 
 namespace SkyDash.Controllers
 {
     public class HomeController : Controller
     {
-      
+
         public ActionResult Index()
         {
-            var authenticate = APIMethods.authenticate(Config.email, Config.password);
-            var accounts = APIMethods.getAccounts(Config.email, Config.password);
-            var vms = APIMethods.getVms(Config.email, Config.password);
+            var api = new APIMethods();
+
+            var authenticate = api.authenticate(Config.email, Config.password);
+            var accounts = api.getAccounts();
+            var vms = api.getVms();
 
             ViewBag.response = authenticate.Content;
-            APIMethods.client.CookieContainer = new System.Net.CookieContainer();
+            
 
-            //ViewBag.response2 = response2.Content;
+            var result = JsonConvert.DeserializeObject<Dictionary<String, VAppAndMachineWrapper>>(vms.Content);
+
+            ViewBag.response2 = result;
+
+
+            foreach (var account in result)
+            {
+                var key = account.Key; // GOSH - Public
+
+                foreach (var vm in account.Value.VirtualMachines)
+                {
+                    foreach (var item in vm)
+                    {
+                        var x = item.Key; // e.g. "GOSH - Public (IL2-PROD-STANDARD)"
+
+                        var brokenMachines = item.Value.Where(m => m.LastBackupStatus == "bannas");
+
+                        foreach (var virtualMachine in item.Value)
+                        {
+                            virtualMachine.
+                        }
+                        
+                    }
+                }
+
+                foreach (var vm in account.Value.VDCs)
+                {
+
+                }
+            }
+
 
             //Account(VMs,Vapps)
 
@@ -30,12 +65,13 @@ namespace SkyDash.Controllers
 
 
             // VDCs (List of VDCs)>>VDC(List of Vapps)>>Vapp(Vapp Details)
-                        
+
             // LINQ
 
+            VmViewModel viewModel = new VmViewModel();
+            // viewModel.backups = 
 
-
-            return View();
+            return View(viewModel);
         }
     }
 }
