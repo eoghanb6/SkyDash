@@ -10,6 +10,7 @@ using Skydash.Response;
 using System.IO;
 using RestSharp.Deserializers;
 using SkyDash.ViewModels;
+using Newtonsoft.Json.Converters;
 
 namespace SkyDash.Controllers
 {
@@ -18,6 +19,7 @@ namespace SkyDash.Controllers
 
         public ActionResult Index()
         {
+            
             var api = new APIMethods();
 
             var authenticate = api.authenticate(Config.email, Config.password);
@@ -27,10 +29,11 @@ namespace SkyDash.Controllers
             ViewBag.response = authenticate.Content;
             
 
-            var result = JsonConvert.DeserializeObject<Dictionary<String, VAppAndMachineWrapper>>(vms.Content);
+            var result = JsonConvert.DeserializeObject<Dictionary<String, VAppAndMachineWrapper>>(vms.Content, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy HH:mm" });
+
 
             ViewBag.response2 = result;
-
+            VmViewModel viewModel = new VmViewModel();
 
             foreach (var account in result)
             {
@@ -42,11 +45,11 @@ namespace SkyDash.Controllers
                     {
                         var x = item.Key; // e.g. "GOSH - Public (IL2-PROD-STANDARD)"
 
-                        var brokenMachines = item.Value.Where(m => m.LastBackupStatus == "bannas");
+                      //  var brokenMachines = item.Value.Where(m => m.LastBackupStatus == "bannas");
 
                         foreach (var virtualMachine in item.Value)
                         {
-                            virtualMachine.
+                            viewModel.ids.Add(virtualMachine.Id);
                         }
                         
                     }
@@ -59,6 +62,7 @@ namespace SkyDash.Controllers
             }
 
 
+
             //Account(VMs,Vapps)
 
             // VDCs (List of VDCs)>>VDC(List of VMs)>>VM(VM Details)>>Backup(Backup Details)
@@ -68,7 +72,7 @@ namespace SkyDash.Controllers
 
             // LINQ
 
-            VmViewModel viewModel = new VmViewModel();
+            
             // viewModel.backups = 
 
             return View(viewModel);

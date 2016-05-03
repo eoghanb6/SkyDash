@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 
 namespace Skydash.Response
 {
@@ -11,15 +12,15 @@ namespace Skydash.Response
         public string BackupSlot { get; set; }
 
         [JsonProperty("backup_start")]
-        public string BackupStart { get; set; }
+        public DateTime? BackupStart { get; set; }
 
         [JsonProperty("backup_end")]
-        public string BackupEnd { get; set; }
+        public DateTime? BackupEnd { get; set; }
 
         [JsonProperty("snapshot_removal_start")]
-        public string SnapshotRemovalStart { get; set; }
+        public DateTime? SnapshotRemovalStart { get; set; }
 
         [JsonProperty("snapshot_removal_end")]
-        public string SnapshotRemovalEnd { get; set; }
+        public DateTime? SnapshotRemovalEnd { get; set; }
     }
 }

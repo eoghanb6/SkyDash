@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using System;
+using System.Globalization;
 
 namespace Skydash.Response
 {
@@ -30,16 +32,18 @@ namespace Skydash.Response
         public string Storage { get; set; }
 
         [JsonProperty("created_at")]
-        public string CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; set; }
 
         [JsonProperty("updated_at")]
-        public string UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; set; }
 
         [JsonProperty("month_to_date")]
-        public string MonthToDate { get; set; }
+        public static string MonthToDate { get; set; }
+        public static decimal? MonthlyCostToDate = decimal.Parse(MonthToDate, NumberStyles.Currency); 
 
         [JsonProperty("estimated_monthly_total")]
-        public string EstimatedMonthlyTotal { get; set; }
+        public static string EstimatedMonthlyTotal { get; set; }
+        public static decimal? EstimatedMonthlyCost = decimal.Parse(EstimatedMonthlyTotal, NumberStyles.Currency);
 
         [JsonProperty("comment")]
         public string Comment { get; set; }

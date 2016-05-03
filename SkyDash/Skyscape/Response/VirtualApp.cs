@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Globalization;
 
 namespace Skydash.Response
 {
@@ -23,6 +24,7 @@ namespace Skydash.Response
         public string MonthToDate { get; set; }
 
         [JsonProperty("estimated_monthly_total")]
-        public string EstimatedMonthlyTotal { get; set; }
+        public  string EstimatedMonthlyTotal { get; set; }
+        public  decimal? EstimatedMonthlyCost = decimal.Parse(EstimatedMonthlyTotal, NumberStyles.Currency);
     }
 }
