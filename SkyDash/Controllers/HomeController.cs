@@ -49,7 +49,7 @@ namespace SkyDash.Controllers
 
                         foreach (var virtualMachine in item.Value)
                         {
-                            viewModel.ids.Add(virtualMachine.Id);
+                          //  viewModel.ids.Add(virtualMachine.Id);
                         }
                         
                     }

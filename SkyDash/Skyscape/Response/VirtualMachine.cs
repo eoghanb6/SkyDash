@@ -38,12 +38,34 @@ namespace Skydash.Response
         public DateTime? UpdatedAt { get; set; }
 
         [JsonProperty("month_to_date")]
-        public static string MonthToDate { get; set; }
-        public static decimal? MonthlyCostToDate = decimal.Parse(MonthToDate, NumberStyles.Currency); 
+        public  string MonthToDate { get; set; }
+        public decimal? CostToDate
+        {
+            get
+            {
+                if (MonthToDate != null)
+                {
+                    return decimal.Parse(MonthToDate, NumberStyles.Currency);
+                }
+                return null; 
+
+            }
+        }
 
         [JsonProperty("estimated_monthly_total")]
-        public static string EstimatedMonthlyTotal { get; set; }
-        public static decimal? EstimatedMonthlyCost = decimal.Parse(EstimatedMonthlyTotal, NumberStyles.Currency);
+        public  string EstimatedMonthlyTotal { get; set; }
+        public decimal? EstimatedMonthlyCost
+        {
+            get
+            {
+                if (EstimatedMonthlyTotal != null)
+                {
+                    return decimal.Parse(EstimatedMonthlyTotal, NumberStyles.Currency);
+                }
+                return null; 
+
+            }
+        }
 
         [JsonProperty("comment")]
         public string Comment { get; set; }
