@@ -34,7 +34,6 @@ namespace Skydash.Response
                     return decimal.Parse(EstimatedMonthlyTotal, NumberStyles.Currency);
                 }
                 return null; 
-
             }
         }
     }

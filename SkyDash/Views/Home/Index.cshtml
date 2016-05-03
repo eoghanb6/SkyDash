@@ -3,14 +3,9 @@
 
 
 <h1>@ViewBag.response</h1>
-<h2>@ViewBag.response2</h2>
-<h2>@ViewBag.response3</h2>
-<h3>@ViewBag.nicePrettyObject</h3>
 
-
-<h1>@Model.name</h1>
-
-<h1>@Model.name</h1>
-
-|<h1>@Model.id</h1>
+@foreach (var pineabbl in Model.names)
+{
+    <li>@pineabbl</li>
+}
 

@@ -48,7 +48,6 @@ namespace Skydash.Response
                     return decimal.Parse(MonthToDate, NumberStyles.Currency);
                 }
                 return null; 
-
             }
         }
 
@@ -63,7 +62,6 @@ namespace Skydash.Response
                     return decimal.Parse(EstimatedMonthlyTotal, NumberStyles.Currency);
                 }
                 return null; 
-
             }
         }
 
@@ -80,13 +78,13 @@ namespace Skydash.Response
         public string LastBackup { get; set; }
 
         [JsonProperty("retention_length")]
-        public int RetentionLength { get; set; }
+        public int? RetentionLength { get; set; }
 
         [JsonProperty("billed_hours_powered_on")]
-        public int BilledHoursPoweredOn { get; set; }
+        public int? BilledHoursPoweredOn { get; set; }
 
         [JsonProperty("billed_hours_powered_off")]
-        public int BilledHoursPoweredOff { get; set; }
+        public int? BilledHoursPoweredOff { get; set; }
 
         [JsonProperty("backups")]
         public List<Backup> Backups { get; set; }

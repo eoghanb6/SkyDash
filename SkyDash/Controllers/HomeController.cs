@@ -16,40 +16,41 @@ namespace SkyDash.Controllers
 {
     public class HomeController : Controller
     {
-
         public ActionResult Index()
         {
-            
             var api = new APIMethods();
 
             var authenticate = api.authenticate(Config.email, Config.password);
             var accounts = api.getAccounts();
             var vms = api.getVms();
-
-            ViewBag.response = authenticate.Content;
-            
-
-            var result = JsonConvert.DeserializeObject<Dictionary<String, VAppAndMachineWrapper>>(vms.Content, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy HH:mm" });
-
-
-            ViewBag.response2 = result;
             VmViewModel viewModel = new VmViewModel();
+            viewModel.names = new List<string>();
+
+            if (authenticate.Content == "{\"expires_after\":900}")
+            {
+                ViewBag.response = "Authentication successful";
+            }
+            else
+            {
+                ViewBag.response = "Authentication Failed";
+            }
+
+            var result = JsonConvert.DeserializeObject<Dictionary<string, VAppAndMachineWrapper>>(vms.Content, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy HH:mm" });
 
             foreach (var account in result)
             {
                 var key = account.Key; // GOSH - Public
 
-                foreach (var vm in account.Value.VirtualMachines)
+                foreach (var vDC in account.Value.VirtualMachines)
                 {
-                    foreach (var item in vm)
-                    {
-                        var x = item.Key; // e.g. "GOSH - Public (IL2-PROD-STANDARD)"
+                    foreach (var vm in vDC)
+                    {// e.g. "GOSH - Public (IL2-PROD-STANDARD)"
 
                       //  var brokenMachines = item.Value.Where(m => m.LastBackupStatus == "bannas");
 
-                        foreach (var virtualMachine in item.Value)
+                        foreach (var virtualMachine in vm.Value)
                         {
-                          //  viewModel.ids.Add(virtualMachine.Id);
+                            viewModel.names.Add(virtualMachine.Name);
                         }
                         
                     }
@@ -60,21 +61,15 @@ namespace SkyDash.Controllers
 
                 }
             }
-
-
-
+            
             //Account(VMs,Vapps)
 
             // VDCs (List of VDCs)>>VDC(List of VMs)>>VM(VM Details)>>Backup(Backup Details)
-
-
+            
             // VDCs (List of VDCs)>>VDC(List of Vapps)>>Vapp(Vapp Details)
 
             // LINQ
-
-            
-            // viewModel.backups = 
-
+                     
             return View(viewModel);
         }
     }
