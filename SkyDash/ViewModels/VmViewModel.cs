@@ -11,5 +11,6 @@ namespace SkyDash.ViewModels
         public List<string> names { get; set; }
         public string last_backup_status { get; set; }
         public List<Backup> backups { get; set; }
+        public List<PanelVM> panelVMs { get; set; }
     }
 }

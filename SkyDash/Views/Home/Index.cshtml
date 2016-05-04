@@ -4,8 +4,10 @@
 
 <h1>@ViewBag.response</h1>
 
-@foreach (var pineabbl in Model.names)
+@foreach (var vm in Model.panelVMs)
 {
-    <li>@pineabbl</li>
+    <li>@vm.Name</li>
+    <li>@vm.LastBackup</li>
+    <li>@vm.LastBackupStatus</li>
 }
 

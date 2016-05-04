@@ -89,4 +89,11 @@ namespace Skydash.Response
         [JsonProperty("backups")]
         public List<Backup> Backups { get; set; }
     }
+
+    public class PanelVM
+    {
+        public string Name;
+        public string LastBackupStatus;
+        public string LastBackup;
+    }
 }
