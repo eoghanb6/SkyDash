@@ -4,8 +4,27 @@
 
 <h1>@ViewBag.response</h1>
 
-@foreach (var pineabbl in Model.names)
-{
-    <li>@pineabbl</li>
-}
 
+
+@foreach (var foo in Model.names)
+{
+    <div class="panel panel-default">
+         @if () {
+        <div class="panel-body-success">
+            @foo
+        </div>
+         }
+         else if ()
+         {
+            <div class="panel-body-failure">
+                @foo
+            </div>
+         }
+         else
+         {
+            <div class="panel-body-excluded">
+                @foo
+            </div>
+         }
+    </div>
+}

@@ -6814,3 +6814,10 @@ td.visible-print {
     display: none !important;
   }
 }
+
+.panel-body-success {
+background:#99ff99;}
+
+.panel-body-fail {
+    background:#ff0000
+}
