@@ -25,15 +25,13 @@ namespace SkyDash.Controllers
             var vms = api.getVms();
             VmViewModel viewModel = new VmViewModel();
             viewModel.names = new List<string>();
+            viewModel.panelVMs = new List<PanelVM>();
+            int i = 0;
 
             if (authenticate.Content == "{\"expires_after\":900}")
             {
                 ViewBag.response = "Authentication successful";
-            }
-            else
-            {
-                ViewBag.response = "Authentication Failed";
-            }
+            
 
             var result = JsonConvert.DeserializeObject<Dictionary<string, VAppAndMachineWrapper>>(vms.Content, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy HH:mm" });
 
@@ -46,13 +44,16 @@ namespace SkyDash.Controllers
                     foreach (var vm in vDC)
                     {// e.g. "GOSH - Public (IL2-PROD-STANDARD)"
 
-                      //  var brokenMachines = item.Value.Where(m => m.LastBackupStatus == "bannas");
+                      //  var brokenMachines = item.Value.Where(m => m.LastBackupStatus == "Failed");
 
                         foreach (var virtualMachine in vm.Value)
                         {
-                            viewModel.names.Add(virtualMachine.Name);
+                            viewModel.panelVMs.Add(new PanelVM());
+                            viewModel.panelVMs[i].Name = virtualMachine.Name;
+                            viewModel.panelVMs[i].LastBackupStatus = virtualMachine.LastBackupStatus;
+                            viewModel.panelVMs[i].LastBackup = virtualMachine.LastBackup;
+                            i++;
                         }
-                        
                     }
                 }
 
@@ -61,16 +62,23 @@ namespace SkyDash.Controllers
 
                 }
             }
-            
-            //Account(VMs,Vapps)
 
-            // VDCs (List of VDCs)>>VDC(List of VMs)>>VM(VM Details)>>Backup(Backup Details)
-            
-            // VDCs (List of VDCs)>>VDC(List of Vapps)>>Vapp(Vapp Details)
+                //Account(VMs,Vapps)
 
-            // LINQ
+                // VDCs (List of VDCs)>>VDC(List of VMs)>>VM(VM Details)>>Backup(Backup Details)
+
+                // VDCs (List of VDCs)>>VDC(List of Vapps)>>Vapp(Vapp Details)
+
+                // LINQ 
+            }
+            else
+            {
+                ViewBag.response = "Authentication Failed";
+            }
                      
             return View(viewModel);
+
+           
         }
     }
 }
