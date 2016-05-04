@@ -6816,8 +6816,13 @@ td.visible-print {
 }
 
 .panel-body-success {
-background:#99ff99;}
+    background:#76EE00;
+}
 
 .panel-body-fail {
     background:#ff0000
+}
+
+.panel-body-excluded {
+    background:#A9A9A9
 }

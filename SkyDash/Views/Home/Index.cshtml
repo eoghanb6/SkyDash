@@ -4,35 +4,33 @@
 
 <h1>@ViewBag.response</h1>
 
-<<<<<<< HEAD
-=======
 @foreach (var vm in Model.panelVMs)
 {
-    <li>@vm.Name</li>
-    <li>@vm.LastBackup</li>
-    <li>@vm.LastBackupStatus</li>
-}
->>>>>>> e86341e124f4125ea0718829cd3231bfce8bea56
-
-
-@foreach (var foo in Model.names)
-{
     <div class="panel panel-default">
-         @if () {
+         @if (vm.LastBackupStatus == "Successful") {
         <div class="panel-body-success">
-            @foo
+            <ul>
+                <li>@vm.Name</li>
+                <li>@vm.LastBackup</li>
+            </ul>
         </div>
          }
-         else if ()
+         else if (vm.LastBackupStatus == "Failed")
          {
-            <div class="panel-body-failure">
-                @foo
+            <div class="panel-body-fail">
+                <ul>
+                    <li>@vm.Name</li>
+                    <li>@vm.LastBackup</li>
+                </ul>
             </div>
          }
          else
          {
             <div class="panel-body-excluded">
-                @foo
+                <ul>
+                    <li>@vm.Name</li>
+                    <li>@vm.LastBackup</li>
+                </ul>
             </div>
          }
     </div>
