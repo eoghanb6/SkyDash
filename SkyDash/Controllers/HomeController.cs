@@ -26,6 +26,7 @@ namespace SkyDash.Controllers
             VmViewModel viewModel = new VmViewModel();
             viewModel.names = new List<string>();
             viewModel.panelVMs = new List<PanelVM>();
+            viewModel.accounts = new List<string>();
             int i = 0;
 
             if (authenticate.Content == "{\"expires_after\":900}")
@@ -38,8 +39,9 @@ namespace SkyDash.Controllers
             foreach (var account in result)
             {
                 var key = account.Key; // GOSH - Public
+                    viewModel.accounts.Add(account.Key);
 
-                foreach (var vDC in account.Value.VirtualMachines)
+                    foreach (var vDC in account.Value.VirtualMachines)
                 {
                     foreach (var vm in vDC)
                     {// e.g. "GOSH - Public (IL2-PROD-STANDARD)"

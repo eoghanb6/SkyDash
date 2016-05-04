@@ -8,6 +8,8 @@ namespace SkyDash.ViewModels
 {
     public class VmViewModel
     {
+        public string account { get; set; }
+        public List<string> accounts { get; set; }
         public List<string> names { get; set; }
         public string last_backup_status { get; set; }
         public List<Backup> backups { get; set; }

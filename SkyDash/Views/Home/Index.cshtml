@@ -1,13 +1,16 @@
 ﻿@model SkyDash.ViewModels.VmViewModel
 
 
-
+<h1>@Model.accounts[0]</h1>
 <h1>@ViewBag.response</h1>
+
 
 @foreach (var vm in Model.panelVMs)
 {
+    if(vm.Account == Model.accounts[0]) {
     <div class="panel panel-default">
-         @if (vm.LastBackupStatus == "Successful") {
+         @if (vm.LastBackupStatus == "Successful")
+         {
         <div class="panel-body-success">
             <ul>
                 <li>@vm.Name</li>
@@ -32,6 +35,7 @@
                     <li>@vm.LastBackup</li>
                 </ul>
             </div>
+             }
          }
     </div>
 }
