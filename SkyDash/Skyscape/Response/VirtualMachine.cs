@@ -95,6 +95,5 @@ namespace Skydash.Response
         public string Name;
         public string LastBackupStatus;
         public string LastBackup;
-        public string Account;
     }
 }

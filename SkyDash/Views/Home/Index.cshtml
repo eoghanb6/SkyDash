@@ -7,7 +7,7 @@
 
 @foreach (var vm in Model.panelVMs)
 {
-    if(vm.Account == Model.accounts[0]) {
+ 
     <div class="panel panel-default">
          @if (vm.LastBackupStatus == "Successful")
          {
@@ -36,6 +36,6 @@
                 </ul>
             </div>
              }
-         }
+         
     </div>
 }
