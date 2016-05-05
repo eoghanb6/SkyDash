@@ -40,6 +40,7 @@ namespace SkyDash.Controllers
                 }
 
                 foreach (var vDC in result[viewModel.accounts[0]].VirtualMachines)
+
                 {
                     foreach (var vm in vDC)
                     {// e.g. "GOSH - Public (IL2-PROD-STANDARD)"
