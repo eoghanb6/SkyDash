@@ -26,20 +26,20 @@ namespace SkyDash.Controllers
             VmViewModel viewModel = new VmViewModel();
             viewModel.names = new List<string>();
             viewModel.panelVMs = new List<PanelVM>();
+            viewModel.accounts = new List<string>();
             int i = 0;
 
             if (authenticate.Content == "{\"expires_after\":900}")
             {
                 ViewBag.response = "Authentication successful";
-            
 
             var result = JsonConvert.DeserializeObject<Dictionary<string, VAppAndMachineWrapper>>(vms.Content, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy HH:mm" });
 
-            foreach (var account in result)
-            {
-                var key = account.Key; // GOSH - Public
+                foreach (var account in result) {
+                    viewModel.accounts.Add(account.Key);
+                }
 
-                foreach (var vDC in account.Value.VirtualMachines)
+                foreach (var vDC in result[viewModel.accounts[0]].VirtualMachines)
                 {
                     foreach (var vm in vDC)
                     {// e.g. "GOSH - Public (IL2-PROD-STANDARD)"
@@ -56,12 +56,7 @@ namespace SkyDash.Controllers
                         }
                     }
                 }
-
-                foreach (var vm in account.Value.VDCs)
-                {
-
-                }
-            }
+            
 
                 //Account(VMs,Vapps)
 
