@@ -43,7 +43,7 @@ namespace SkyDash.Controllers
 
                 {
                     foreach (var vm in vDC)
-                    {// e.g. "GOSH - Public (IL2-PROD-STANDARD)"
+                    {
 
                       //  var brokenMachines = item.Value.Where(m => m.LastBackupStatus == "Failed");
 
