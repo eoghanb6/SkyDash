@@ -1,40 +1,40 @@
 ﻿@model SkyDash.ViewModels.VmViewModel
 
 
-<h1>@ViewBag.response</h1>
+<h1 style="text-align: center">@ViewBag.response</h1>
 
 
 @foreach (var vm in Model.panelVMs)
 {
  
-    <div class="panel panel-default">
+    <div class="col-md-2">
          @if (vm.LastBackupStatus == "Successful")
          {
         <div class="panel-body-success">
-            <ul>
-                <li>@vm.Name</li>
-                <li>@vm.LastBackup</li>
+            <ul class="no-bullet center">
+                <li class="vm-name">@vm.Name</li>
+                <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
             </ul>
         </div>
          }
          else if (vm.LastBackupStatus == "Failed")
          {
             <div class="panel-body-fail">
-                <ul>
-                    <li>@vm.Name</li>
-                    <li>@vm.LastBackup</li>
+                <ul class="no-bullet center">
+                    <li class="vm-name">@vm.Name</li>
+                    <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
                 </ul>
             </div>
          }
          else
          {
             <div class="panel-body-excluded">
-                <ul>
-                    <li>@vm.Name</li>
+                <ul class="no-bullet center">
+                    <li class="vm-name">@vm.Name</li>
                     <li>@vm.LastBackup</li>
                 </ul>
             </div>
-             }
+         }
          
     </div>
 }

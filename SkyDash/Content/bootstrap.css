@@ -1099,7 +1099,10 @@ pre code {
     width: 8.333333333333332%;
   }
   .col-md-2 {
-    width: 16.666666666666664%;
+    position: relative;
+    width: 23%;
+    margin-bottom: 1vh;
+    margin-right:1.9vw;
   }
   .col-md-3 {
     width: 25%;
@@ -6816,13 +6819,43 @@ td.visible-print {
 }
 
 .panel-body-success {
+    outline-style: groove;
+    outline-width: 0.2vw;
+    outline-color: #00cc00;
+    width: 110%;
+    height: 100%;
     background:#76EE00;
 }
 
 .panel-body-fail {
-    background:#ff0000
+    outline-style: groove;
+    outline-width: 0.2vw;
+    outline-color: #cc0000;
+    width: 110%;
+    height: 100%;
+    background:#ff0000;
 }
 
 .panel-body-excluded {
+    outline-style: groove;
+    outline-width: 0.2vw;
+    width: 110%;
+    height: 100%;
     background:#A9A9A9
+}
+
+.vm-name {
+    font-weight: 600;
+    font-size: 2.5vh;
+}
+
+.center {
+    font-weight: 500;
+    text-align: center;
+    padding-right: 2vw;
+    font-size: 2.25vh;
+}
+
+.no-bullet {
+    list-style-type: none;
 }
