@@ -25,9 +25,11 @@ namespace SkyDash.Controllers
             var vms = api.getVms();
             VmViewModel viewModel = new VmViewModel();
             viewModel.names = new List<string>();
-            viewModel.panelVMs = new List<PanelVM>();
+            viewModel.account1Vms = new List<PanelVM>();
+            viewModel.account2Vms = new List<PanelVM>();
             viewModel.accounts = new List<string>();
             int i = 0;
+            int j = 0;
 
             if (authenticate.Content == "{\"expires_after\":900}")
             {
@@ -40,20 +42,29 @@ namespace SkyDash.Controllers
                 }
 
                 foreach (var vDC in result[viewModel.accounts[0]].VirtualMachines)
-
                 {
                     foreach (var vm in vDC)
                     {
-
-                      //  var brokenMachines = item.Value.Where(m => m.LastBackupStatus == "Failed");
+                        //  var brokenMachines = item.Value.Where(m => m.LastBackupStatus == "Failed");
 
                         foreach (var virtualMachine in vm.Value)
                         {
-                            viewModel.panelVMs.Add(new PanelVM());
-                            viewModel.panelVMs[i].Name = virtualMachine.Name;
-                            viewModel.panelVMs[i].LastBackupStatus = virtualMachine.LastBackupStatus;
-                            viewModel.panelVMs[i].LastBackup = virtualMachine.LastBackup;
-                            i++;
+                            if (vm.Key.Contains(viewModel.accounts[0].Substring(0, 4)))
+                            {
+                                viewModel.account1Vms.Add(new PanelVM());
+                                viewModel.account1Vms[i].Name = virtualMachine.Name;
+                                viewModel.account1Vms[i].LastBackupStatus = virtualMachine.LastBackupStatus;
+                                viewModel.account1Vms[i].LastBackup = virtualMachine.LastBackup;
+                                i++;
+                            }
+                            else if (vm.Key.Contains(viewModel.accounts[1].Substring(0, 5)))
+                            {
+                                viewModel.account2Vms.Add(new PanelVM());
+                                viewModel.account2Vms[j].Name = virtualMachine.Name;
+                                viewModel.account2Vms[j].LastBackupStatus = virtualMachine.LastBackupStatus;
+                                viewModel.account2Vms[j].LastBackup = virtualMachine.LastBackup;
+                                j++;
+                            }
                         }
                     }
                 }

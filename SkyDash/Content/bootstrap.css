@@ -1100,6 +1100,7 @@ pre code {
   }
   .col-md-2 {
     position: relative;
+    float: left;
     width: 23%;
     margin-bottom: 1vh;
     margin-right:1.9vw;
@@ -6858,4 +6859,19 @@ td.visible-print {
 
 .no-bullet {
     list-style-type: none;
+}
+
+.div-spacing {
+    margin-bottom: 30vh;
+}
+
+.account-name {
+    font-size: 5vh;
+    text-align: center;
+    font-weight: 600;
+}
+
+.authenticate {
+    text-align: right;
+    font-size: 2vh;
 }
