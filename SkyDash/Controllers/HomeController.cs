@@ -1,17 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using RestSharp;
 using Newtonsoft.Json;
 using SkyDash.Skyscape;
 using Skydash.Response;
-using System.IO;
-using RestSharp.Deserializers;
 using SkyDash.ViewModels;
 using Newtonsoft.Json.Converters;
-using System.Threading;
 using SkyDash.Skyscape.Response;
 
 namespace SkyDash.Controllers
@@ -30,7 +23,6 @@ namespace SkyDash.Controllers
             viewModel.names = new List<string>();
             viewModel.accountVms = new List<PanelVM>();
             viewModel.accounts = new List<Account>();
-            int j = 0;
 
             if (authenticate.Content == "{\"expires_after\":900}")
             {
@@ -48,16 +40,16 @@ namespace SkyDash.Controllers
                         {
                             foreach (var vApp in vDC.vApps)
                             {
-                                //  var brokenMachines = item.Value.Where(m => m.LastBackupStatus == "Failed");
-
                                 foreach (var virtualMachine in vApp.VMs)
                                 {
-                                    viewModel.accountVms.Add(new PanelVM());
-                                    viewModel.accountVms[j].Name = virtualMachine.Name;
-                                    viewModel.accountVms[j].LastBackupStatus = virtualMachine.LastBackupStatus;
-                                    viewModel.accountVms[j].LastBackup = virtualMachine.LastBackup;
-                                    viewModel.accountVms[j].AccountId = result.Account.id;
-                                    j++;
+                                    PanelVM panelVm = new PanelVM();
+                                    {
+                                        panelVm.AccountId = result.Account.id;
+                                        panelVm.Name = virtualMachine.Name;
+                                        panelVm.LastBackupStatus = virtualMachine.LastBackupStatus;
+                                        panelVm.LastBackup = virtualMachine.LastBackup;
+                                    }
+                                    viewModel.accountVms.Add(panelVm);
                                 }
                             }
                         }
