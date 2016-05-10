@@ -8,19 +8,19 @@ namespace Skydash.Response
         [JsonProperty("status")]
         public string Status { get; set; }
 
-        [JsonProperty("backup_slot")]
+        [JsonProperty("backupSlot")]
         public string BackupSlot { get; set; }
 
-        [JsonProperty("backup_start")]
+        [JsonProperty("backupStart")]
         public DateTime? BackupStart { get; set; }
 
-        [JsonProperty("backup_end")]
+        [JsonProperty("backupEnd")]
         public DateTime? BackupEnd { get; set; }
 
-        [JsonProperty("snapshot_removal_start")]
+        [JsonProperty("snapshotRemovalStart")]
         public DateTime? SnapshotRemovalStart { get; set; }
 
-        [JsonProperty("snapshot_removal_end")]
+        [JsonProperty("snapshotRemovalEnd")]
         public DateTime? SnapshotRemovalEnd { get; set; }
     }
 }

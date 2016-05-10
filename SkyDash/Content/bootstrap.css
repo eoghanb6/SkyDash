@@ -1101,9 +1101,9 @@ pre code {
   .col-md-2 {
     position: relative;
     float: left;
-    width: 23%;
-    margin-bottom: 1vh;
-    margin-right:1.9vw;
+    width: 19%;
+    margin-right: 0.7vw;
+    margin-bottom: 0.5vw;
   }
   .col-md-3 {
     width: 25%;
@@ -6846,32 +6846,28 @@ td.visible-print {
 }
 
 .vm-name {
-    font-weight: 600;
-    font-size: 2.5vh;
+    font-weight: 700;
+    font-size: 1vw;
 }
-
 .center {
     font-weight: 500;
     text-align: center;
     padding-right: 2vw;
-    font-size: 2.25vh;
+    font-size: 1.2vw;
 }
 
 .no-bullet {
     list-style-type: none;
 }
 
-.div-spacing {
-    margin-bottom: 30vh;
-}
-
 .account-name {
-    font-size: 5vh;
+    font-size: 3vw;
     text-align: center;
     font-weight: 600;
+    clear:both;
 }
 
 .authenticate {
     text-align: right;
-    font-size: 2vh;
+    font-size: 1vw;
 }

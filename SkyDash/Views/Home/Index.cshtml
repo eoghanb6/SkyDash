@@ -3,74 +3,44 @@
 
 <h1 class="authenticate">@ViewBag.response</h1>
 
-<h2 class="account-name">@Model.accounts[0]</h2>
+@foreach (var account in Model.accounts)
+{
+<h2 class="account-name">@account.name</h2>
 <div class="div-spacing">
-@foreach (var vm in Model.account1Vms)
+@foreach (var vm in Model.accountVms)
 {
-
-    <div class="col-md-2">
-         @if (vm.LastBackupStatus == "Successful")
-         {
-        <div class="panel-body-success">
-            <ul class="no-bullet center">
-                <li class="vm-name">@vm.Name</li>
-                <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
-            </ul>
-        </div>
-         }
-         else if (vm.LastBackupStatus == "Failed")
-         {
-            <div class="panel-body-fail">
-                <ul class="no-bullet center">
-                    <li class="vm-name">@vm.Name</li>
-                    <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
-                </ul>
-            </div>
-         }
-         else
-         {
-            <div class="panel-body-excluded">
-                <ul class="no-bullet center">
-                    <li class="vm-name">@vm.Name</li>
-                    <li>@vm.LastBackup</li>
-                </ul>
-            </div>
-         } 
-    </div>
-}
-</div>
-<h2 class="account-name">@Model.accounts[1]</h2>
-<div>
-@foreach (var vm in Model.account2Vms)
-{
-    <div class="col-md-2">
-        @if (vm.LastBackupStatus == "Successful")
-        {
+    if (vm.AccountId == account.id)
+    {
+        <div class="col-md-2">
+             @if (vm.LastBackupStatus == "Successful")
+             {
             <div class="panel-body-success">
                 <ul class="no-bullet center">
                     <li class="vm-name">@vm.Name</li>
                     <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
                 </ul>
             </div>
-        }
-        else if (vm.LastBackupStatus == "Failed")
-        {
-            <div class="panel-body-fail">
-                <ul class="no-bullet center">
-                    <li class="vm-name">@vm.Name</li>
-                    <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
-                </ul>
-            </div>
-        }
-        else
-        {
-            <div class="panel-body-excluded">
-                <ul class="no-bullet center">
-                    <li class="vm-name">@vm.Name</li>
-                    <li>@vm.LastBackup</li>
-                </ul>
-            </div>
-        }
-    </div>
+             }
+             else if (vm.LastBackupStatus == "Failed")
+             {
+                <div class="panel-body-fail">
+                    <ul class="no-bullet center">
+                        <li class="vm-name">@vm.Name</li>
+                        <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
+                    </ul>
+                </div>
+             }
+             else
+             {
+                <div class="panel-body-excluded">
+                    <ul class="no-bullet center">
+                        <li class="vm-name">@vm.Name</li>
+                        <li>@vm.LastBackup</li>
+                    </ul>
+                </div>
+             } 
+        </div>
+    }
 }
 </div>
+}

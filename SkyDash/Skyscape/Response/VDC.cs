@@ -1,10 +1,13 @@
 ﻿using Newtonsoft.Json;
+using Skydash.Response;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Linq;
+using System.Web;
 
-namespace Skydash.Response
+namespace SkyDash.Skyscape.Response
 {
-    public class VirtualApp
+    public class VDC
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -12,7 +15,7 @@ namespace Skydash.Response
         [JsonProperty("urn")]
         public string Urn { get; set; }
 
-        [JsonProperty("VMs")]
-        public List<VirtualMachine> VMs { get; set; }
+        [JsonProperty("vApps")]
+        public List<VirtualApp> vApps { get; set; }
     }
 }
