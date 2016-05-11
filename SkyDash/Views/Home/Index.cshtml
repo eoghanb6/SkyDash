@@ -8,7 +8,12 @@
     <h2 class="account-name">@account.name</h2>
     <div class="div-spacing">
         @foreach (var vm in Model.accountVms)
-        {
+        { 
+            <div id="DialogBox" title="Dialog Box">
+                <h3>Backups</h3>
+                
+            </div>
+
             if (vm.AccountId == account.id)
             {
                 <div class="col-md-2">
@@ -19,7 +24,9 @@
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
                             </ul>
+                            <button id="btnDialog" type="button">Open Dialog</button>
                         </div>
+
                      }
                      else if (vm.LastBackupStatus == "Failed")
                      {
@@ -36,7 +43,7 @@
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup</li>
-                            </ul>
+                            </ul>x
                         </div>
                      } 
                 </div>
@@ -44,3 +51,27 @@
         }
     </div>
 }
+
+<script type="text/javascript">
+        $(document).ready(function () {
+            $('#DialogBox').dialog({
+                autoOpen: false,
+                modal: false,
+                width: 300,
+                height: 300,
+                show: {
+                    effect: "blind",
+                    duration: 100
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 10000
+                }
+            });
+
+            $('#btnDialog').click(function () {
+                $('#DialogBox').dialog("open");
+
+            });
+        });
+</script>
