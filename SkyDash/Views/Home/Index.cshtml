@@ -1,5 +1,32 @@
 ﻿@model SkyDash.ViewModels.VmViewModel
 
+@section scripts{
+    
+    @foreach (var vm in Model.accountVms)
+    {
+    <script type="text/javascript">
+        $(function () {
+            $('#dialog-@vm.Name').dialog({
+                autoOpen: false,
+                width: 500,
+                height: 500,
+                show: {
+                    effect: "blind",
+                    duration: 100
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 100
+                }
+            });
+        });
+
+        $('#btn-@vm.Name').click(function () {
+            $('#dialog-@vm.Name').dialog("open");
+        });
+</script>
+        }
+    }
 
 <h1 class="authenticate">@ViewBag.response</h1>
 
@@ -9,11 +36,7 @@
     <div class="div-spacing">
         @foreach (var vm in Model.accountVms)
         { 
-            <div id="DialogBox" title="Dialog Box">
-                <h3>Backups</h3>
-                
-            </div>
-
+ 
             if (vm.AccountId == account.id)
             {
                 <div class="col-md-2">
@@ -23,9 +46,17 @@
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
+                                <li><button id="btn-@vm.Name">More Backups</button></li>
                             </ul>
-                            <button id="btnDialog" type="button">Open Dialog</button>
+                            <div id="dialog-@vm.Name">
+                                <h1>@vm.Name Backups</h1>
+                                @foreach (var backup in vm.backups) {
+                                    <ul>@backup.BackupEnd - @backup.Status</ul>
+                                }
+                            </div>
+                            
                         </div>
+
 
                      }
                      else if (vm.LastBackupStatus == "Failed")
@@ -52,26 +83,3 @@
     </div>
 }
 
-<script type="text/javascript">
-        $(document).ready(function () {
-            $('#DialogBox').dialog({
-                autoOpen: false,
-                modal: false,
-                width: 300,
-                height: 300,
-                show: {
-                    effect: "blind",
-                    duration: 100
-                },
-                hide: {
-                    effect: "explode",
-                    duration: 10000
-                }
-            });
-
-            $('#btnDialog').click(function () {
-                $('#DialogBox').dialog("open");
-
-            });
-        });
-</script>

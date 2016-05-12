@@ -23,6 +23,7 @@ namespace SkyDash.Controllers
             viewModel.names = new List<string>();
             viewModel.accountVms = new List<PanelVM>();
             viewModel.accounts = new List<Account>();
+            viewModel.backups = new List<Backup>();
 
             if (authenticate.Content == "{\"expires_after\":900}")
             {
@@ -48,6 +49,7 @@ namespace SkyDash.Controllers
                                         panelVm.Name = virtualMachine.Name;
                                         panelVm.LastBackupStatus = virtualMachine.LastBackupStatus;
                                         panelVm.LastBackup = virtualMachine.LastBackup;
+                                        panelVm.backups = virtualMachine.Backups;
                                     }
                                     viewModel.accountVms.Add(panelVm);
                                 }

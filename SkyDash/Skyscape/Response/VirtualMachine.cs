@@ -89,5 +89,6 @@ namespace Skydash.Response
         public string LastBackupStatus;
         public string LastBackup;
         public int AccountId;
+        public List<Backup> backups;
     }
 }
