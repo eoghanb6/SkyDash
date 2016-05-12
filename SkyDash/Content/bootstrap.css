@@ -6826,6 +6826,7 @@ td.visible-print {
     width: 110%;
     height: 100%;
     background:#76EE00;
+    cursor: pointer;
 }
 
 .panel-body-fail {
@@ -6835,6 +6836,7 @@ td.visible-print {
     width: 110%;
     height: 100%;
     background:#ff0000;
+    cursor: pointer;
 }
 
 .panel-body-excluded {
@@ -6842,7 +6844,8 @@ td.visible-print {
     outline-width: 0.2vw;
     width: 110%;
     height: 100%;
-    background:#A9A9A9
+    background:#A9A9A9;
+    
 }
 
 .vm-name {
