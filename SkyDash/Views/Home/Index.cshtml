@@ -18,6 +18,11 @@
                 hide: {
                     effect: "explode",
                     duration: 100
+                },
+                open: function () {
+                    jQuery('.ui-widget-overlay').bind('click', function () {
+                        jQuery('#dialog-@vm.Name').dialog('close');
+                    })
                 }
             });
         });
