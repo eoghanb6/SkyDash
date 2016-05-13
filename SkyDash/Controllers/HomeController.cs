@@ -11,14 +11,14 @@ namespace SkyDash.Controllers
 {
     public class HomeController : Controller
     {
-        [OutputCache(Duration = 120)]
+        [OutputCache(Duration = 240)]
         public ActionResult Index()
         {
             var api = new APIMethods();
 
             var authenticate = api.authenticate(Config.email, Config.password);
             var accounts = api.getAccounts();
-            
+
             VmViewModel viewModel = new VmViewModel();
             viewModel.names = new List<string>();
             viewModel.accountVms = new List<PanelVM>();
@@ -50,6 +50,7 @@ namespace SkyDash.Controllers
                                         panelVm.LastBackupStatus = virtualMachine.LastBackupStatus;
                                         panelVm.LastBackup = virtualMachine.LastBackup;
                                         panelVm.backups = virtualMachine.Backups;
+                                        panelVm.id = virtualMachine.Id;
                                     }
                                     viewModel.accountVms.Add(panelVm);
                                 }
@@ -62,6 +63,13 @@ namespace SkyDash.Controllers
             {
                 ViewBag.response = "Authentication Failed";
             }
+            return View(viewModel);
+        }
+
+        [OutputCache(Duration = 180)]
+        public ActionResult Snapshots()
+        {
+            SnapshotViewModel viewModel = new SnapshotViewModel();
             return View(viewModel);
         }
     }

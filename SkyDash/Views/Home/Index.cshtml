@@ -1,59 +1,68 @@
 ﻿@model SkyDash.ViewModels.VmViewModel
 
 @section scripts{
-    
-    @foreach (var vm in Model.accountVms)
-    {
+
     <script type="text/javascript">
-        $(function () {
-            $('#dialog-@vm.Name').dialog({
-                autoOpen: false,
-                width: 450,
-                height: 600,
-                modal: true,
-                show: {
-                    effect: "blind",
-                    duration: 100
-                },
-                hide: {
-                    effect: "explode",
-                    duration: 100
-                },
-                open: function () {
-                    jQuery('.ui-widget-overlay').bind('click', function () {
-                        jQuery('#dialog-@vm.Name').dialog('close');
-                    })
-                }
+        $(document).ready(function () {
+            $("#accordion").accordion({
+                clearstyle: true,
+                collapsible: true, //allow accordion to be completely collapsed showing only the headers.
+                active: 0, //open first accordion on load
+                heightStyle: "content"
             });
         });
+    </script>    
 
-        $('#btn-@vm.Name').click(function () {
-            $('#dialog-@vm.Name').dialog("open");
-        });
-</script>
-        }
+    @foreach (var vm in Model.accountVms)
+    {
+        <script type="text/javascript">
+            $(function () {
+                $('#dialog-@vm.id').dialog({
+                    autoOpen: false,
+                    width: 450,
+                    height: 610,
+                    modal: true,
+                    show: {
+                        effect: "blind",
+                        duration: 300
+                    },
+                    hide: {
+                        effect: "blind",
+                        duration: 300
+                    },
+                    open: function () {
+                        jQuery('.ui-widget-overlay').bind('click', function () {
+                            jQuery('#dialog-@vm.id').dialog('close');
+                        })
+                    }
+                });
+            });
+
+            $('#btn-@vm.id').click(function () {
+                $('#dialog-@vm.id').dialog("open");
+            });
+            </script>
     }
+}
 
 <h1 class="authenticate">@ViewBag.response</h1>
-
+<div id="accordion">
 @foreach (var account in Model.accounts)
 {
     <h2 class="account-name">@account.name</h2>
     <div class="div-spacing">
         @foreach (var vm in Model.accountVms)
         {
-
             if (vm.AccountId == account.id)
             {
-                <div id="dialog-@vm.Name">
+                <div id="dialog-@vm.id">
                     <h1>@vm.Name Backups</h1>
                     @foreach (var backup in vm.backups)
                     {
                         <ul>@backup.BackupEnd - @backup.Status</ul>
                     }
                 </div>
-
-                <div class="col-md-2" id="btn-@vm.Name">
+                <div class="col-md-2" id="btn-@vm.id">
                      @if (vm.LastBackupStatus == "Successful")
                      {
                         <div class="panel-body-success">
@@ -61,28 +70,23 @@
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
                             </ul>
-                            
-                            
                         </div>
-
-
                      }
                      else if (vm.LastBackupStatus == "Failed")
                      {
-                        <div class="panel-body-fail"  id="btn-@vm.Name">
+                        <div class="panel-body-fail"  id="btn-@vm.id">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
-                                <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
+                                <li>@vm.LastBackup.Replace("Failed on the night of:", "")</li>
                             </ul>
                         </div>
                      }
                      else
                      {
-                        <div class="panel-body-excluded"  id="btn-@vm.Name">
+                        <div class="panel-body-excluded"  id="btn-@vm.id">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup</li>
-
                             </ul>
                         </div>
                      } 
@@ -91,4 +95,5 @@
         }
     </div>
 }
+    </div>
 

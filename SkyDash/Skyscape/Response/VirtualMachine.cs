@@ -85,6 +85,7 @@ namespace Skydash.Response
 
     public class PanelVM
     {
+        public int id;
         public string Name;
         public string LastBackupStatus;
         public string LastBackup;
