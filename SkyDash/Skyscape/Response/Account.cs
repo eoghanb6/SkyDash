@@ -13,5 +13,7 @@ namespace SkyDash.Skyscape.Response
 
         [JsonProperty("id")]
         public int id { get; set; }
+
+        public bool allBackupsStatus = true;
     }
 }

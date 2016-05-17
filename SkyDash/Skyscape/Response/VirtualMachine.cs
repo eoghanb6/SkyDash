@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Globalization;
+using SkyDash.Skyscape.Response;
 
 namespace Skydash.Response
 {
@@ -85,11 +86,12 @@ namespace Skydash.Response
 
     public class PanelVM
     {
-        public int id;
+        public int Id;
         public string Name;
         public string LastBackupStatus;
         public string LastBackup;
         public int AccountId;
         public List<Backup> backups;
+        public List<Account> Accounts;
     }
 }

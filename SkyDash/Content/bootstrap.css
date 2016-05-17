@@ -6845,7 +6845,6 @@ td.visible-print {
     width: 110%;
     height: 100%;
     background:#A9A9A9;
-    
 }
 
 .vm-name {
@@ -6867,10 +6866,38 @@ td.visible-print {
     font-size: 3vw;
     text-align: center;
     font-weight: 600;
-    clear:both;
+    clear: both;
 }
 
 .authenticate {
     text-align: right;
     font-size: 1vw;
+}
+
+.dialog-content {
+    margin-left: 10%;
+} 
+
+.accordion-header {
+    background: #428bca;
+    color: #fff;
+    font-size: 2vw;
+}
+
+#accordion h2{
+    background: #00cc00;
+    color: #fff;
+    font-size: 2vw;
+}
+
+#accordion h3 {
+    background: #cc0000;
+    color: #fff;
+    font-size: 2vw;
+}
+
+#accordion h4 {
+    background:#A9A9A9;
+    color: #fff;
+    font-size: 2vw;
 }

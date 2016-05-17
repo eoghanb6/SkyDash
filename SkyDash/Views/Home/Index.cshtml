@@ -6,9 +6,9 @@
         $(document).ready(function () {
             $("#accordion").accordion({
                 clearstyle: true,
-                collapsible: true, //allow accordion to be completely collapsed showing only the headers.
+                collapsible: true, //allow accordion to be completely collapsed showing only the headers
                 active: 0, //open first accordion on load
-                heightStyle: "content"
+                heightStyle: "content", //The accordion opens to fit the content
             });
         });
     </script>    
@@ -17,7 +17,7 @@
     {
         <script type="text/javascript">
             $(function () {
-                $('#dialog-@vm.id').dialog({
+                $('#dialog-@vm.Id').dialog({
                     autoOpen: false,
                     width: 450,
                     height: 610,
@@ -32,16 +32,18 @@
                     },
                     open: function () {
                         jQuery('.ui-widget-overlay').bind('click', function () {
-                            jQuery('#dialog-@vm.id').dialog('close');
+                            jQuery('#dialog-@vm.Id').dialog('close');
                         })
                     }
-                });
+                }).prev(".ui-dialog-titlebar").css({ "background": "#428bca", "font-size": "1.5vw", "text-align": "center", "color": "#ffffff"});
             });
 
-            $('#btn-@vm.id').click(function () {
-                $('#dialog-@vm.id').dialog("open");
+            $('#btn-@vm.Id').click(function () {
+                $('#dialog-@vm.Id').dialog("open");
             });
-            </script>
+
+
+       </script>
     }
 }
 
@@ -49,22 +51,34 @@
 <div id="accordion">
 @foreach (var account in Model.accounts)
 {
-    <h2 class="account-name">@account.name</h2>
-    <div class="div-spacing">
+    if (account.allBackupsStatus == true)
+    {
+        <h2 class="account-name accordion-header">@account.name</h2>
+    }
+    else if (account.allBackupsStatus == false)
+    {
+        <h3 class="account-name accordion-header">@account.name</h3>
+    }
+    else
+    {
+        <h4 class="account-name accordion-header">@account.name</h4>
+    }
+    <div>
         @foreach (var vm in Model.accountVms)
         {
             if (vm.AccountId == account.id)
             {
-                <div id="dialog-@vm.id">
-                    <h1>@vm.Name Backups</h1>
+                <div id="dialog-@vm.Id" title="@vm.Name">
+                    <h1 class="dialog-content">Backups</h1>
                     @foreach (var backup in vm.backups)
                     {
                         <ul>@backup.BackupEnd - @backup.Status</ul>
                     }
                 </div>
-                <div class="col-md-2" id="btn-@vm.id">
+                <div class="col-md-2" id="btn-@vm.Id">
                      @if (vm.LastBackupStatus == "Successful")
                      {
+
                         <div class="panel-body-success">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
@@ -74,7 +88,7 @@
                      }
                      else if (vm.LastBackupStatus == "Failed")
                      {
-                        <div class="panel-body-fail"  id="btn-@vm.id">
+                        <div class="panel-body-fail"  id="btn-@vm.Id">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup.Replace("Failed on the night of:", "")</li>
@@ -83,7 +97,7 @@
                      }
                      else
                      {
-                        <div class="panel-body-excluded"  id="btn-@vm.id">
+                        <div class="panel-body-excluded"  id="btn-@vm.Id">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup</li>

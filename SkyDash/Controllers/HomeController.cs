@@ -31,18 +31,21 @@ namespace SkyDash.Controllers
 
                 viewModel.accounts = JsonConvert.DeserializeObject<List<Account>>(accounts.Content);
                 for (int i = 0; i < viewModel.accounts.Count; i++)
-                {
+                { 
                     var vms = api.getVms(viewModel.accounts[i].id);
                     var result = JsonConvert.DeserializeObject<Result>(vms.Content, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy HH:mm" });
 
                     foreach (var vOrg in result.vOrgs)
                     {
                         foreach (var vDC in vOrg.VDCs)
-                        {
+                        {                            
                             foreach (var vApp in vDC.vApps)
                             {
                                 foreach (var virtualMachine in vApp.VMs)
                                 {
+                                    if (virtualMachine.LastBackupStatus.Contains("Failed")) {
+                                        viewModel.accounts[i].allBackupsStatus = false;
+                                    }
                                     PanelVM panelVm = new PanelVM();
                                     {
                                         panelVm.AccountId = result.Account.id;
@@ -50,7 +53,7 @@ namespace SkyDash.Controllers
                                         panelVm.LastBackupStatus = virtualMachine.LastBackupStatus;
                                         panelVm.LastBackup = virtualMachine.LastBackup;
                                         panelVm.backups = virtualMachine.Backups;
-                                        panelVm.id = virtualMachine.Id;
+                                        panelVm.Id = virtualMachine.Id;
                                     }
                                     viewModel.accountVms.Add(panelVm);
                                 }
