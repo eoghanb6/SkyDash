@@ -6878,12 +6878,6 @@ td.visible-print {
     margin-left: 10%;
 } 
 
-.accordion-header {
-    background: #428bca;
-    color: #fff;
-    font-size: 2vw;
-}
-
 #accordion h2{
     background: #00cc00;
     color: #fff;

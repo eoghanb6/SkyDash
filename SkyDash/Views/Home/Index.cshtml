@@ -41,9 +41,7 @@
             $('#btn-@vm.Id').click(function () {
                 $('#dialog-@vm.Id').dialog("open");
             });
-
-
-       </script>
+        </script>
     }
 }
 
@@ -53,15 +51,15 @@
 {
     if (account.allBackupsStatus == true)
     {
-        <h2 class="account-name accordion-header">@account.name</h2>
+        <h2 class="account-name">@account.name</h2>
     }
     else if (account.allBackupsStatus == false)
     {
-        <h3 class="account-name accordion-header">@account.name</h3>
+        <h3 class="account-name">@account.name</h3>
     }
     else
     {
-        <h4 class="account-name accordion-header">@account.name</h4>
+        <h4 class="account-name">@account.name</h4>
     }
     <div>
         @foreach (var vm in Model.accountVms)
