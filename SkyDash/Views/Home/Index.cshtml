@@ -12,12 +12,12 @@
             });
         });
     </script>    
-
+    @{int i = 1;}
     @foreach (var vm in Model.accountVms)
     {
         <script type="text/javascript">
             $(function () {
-                $('#dialog-@vm.Id').dialog({
+                $('#dialog-@vm.counter').dialog({
                     autoOpen: false,
                     width: 450,
                     height: 610,
@@ -32,14 +32,15 @@
                     },
                     open: function () {
                         jQuery('.ui-widget-overlay').bind('click', function () {
-                            jQuery('#dialog-@vm.Id').dialog('close');
+                            $('.ui-dialog-titlebar-close').hide();
+                            jQuery('#dialog-@vm.counter').dialog('close');
                         })
                     }
                 }).prev(".ui-dialog-titlebar").css({ "background": "#428bca", "font-size": "1.5vw", "text-align": "center", "color": "#ffffff"});
             });
 
-            $('#btn-@vm.Id').click(function () {
-                $('#dialog-@vm.Id').dialog("open");
+            $('#btn-@vm.counter').click(function () {
+                $('#dialog-@vm.counter').dialog("open");
             });
         </script>
     }
@@ -66,14 +67,14 @@
         {
             if (vm.AccountId == account.id)
             {
-                <div id="dialog-@vm.Id" title="@vm.Name">
+                <div id="dialog-@vm.counter" title="@vm.Name">
                     <h1 class="dialog-content">Backups</h1>
                     @foreach (var backup in vm.backups)
                     {
                         <ul>@backup.BackupEnd - @backup.Status</ul>
                     }
                 </div>
-                <div class="col-md-2" id="btn-@vm.Id">
+                <div class="col-md-2" id="btn-@vm.counter">
                      @if (vm.LastBackupStatus == "Successful")
                      {
 
@@ -86,7 +87,7 @@
                      }
                      else if (vm.LastBackupStatus == "Failed")
                      {
-                        <div class="panel-body-fail"  id="btn-@vm.Id">
+                        <div class="panel-body-fail"  id="btn-@vm.counter">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup.Replace("Failed on the night of:", "")</li>
@@ -95,7 +96,7 @@
                      }
                      else
                      {
-                        <div class="panel-body-excluded"  id="btn-@vm.Id">
+                        <div class="panel-body-excluded"  id="btn-@vm.counter">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup</li>

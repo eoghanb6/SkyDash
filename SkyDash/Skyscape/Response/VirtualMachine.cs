@@ -93,5 +93,6 @@ namespace Skydash.Response
         public int AccountId;
         public List<Backup> backups;
         public List<Account> Accounts;
+        public int counter;
     }
 }

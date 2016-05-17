@@ -27,6 +27,7 @@ namespace SkyDash.Controllers
 
             if (authenticate.Content == "{\"expires_after\":900}")
             {
+                int k = 0;
                 ViewBag.response = "Authentication successful";
 
                 viewModel.accounts = JsonConvert.DeserializeObject<List<Account>>(accounts.Content);
@@ -54,6 +55,7 @@ namespace SkyDash.Controllers
                                         panelVm.LastBackup = virtualMachine.LastBackup;
                                         panelVm.backups = virtualMachine.Backups;
                                         panelVm.Id = virtualMachine.Id;
+                                        panelVm.counter = k++;
                                     }
                                     viewModel.accountVms.Add(panelVm);
                                 }
