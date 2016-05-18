@@ -15,5 +15,6 @@ namespace SkyDash.Skyscape.Response
         public int id { get; set; }
 
         public bool allBackupsStatus = true;
+        public int numberFailedBackups = 0;
     }
 }

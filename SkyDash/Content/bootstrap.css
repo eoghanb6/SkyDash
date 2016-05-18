@@ -6885,6 +6885,7 @@ td.visible-print {
 }
 
 #accordion h3 {
+    width: 100%;
     background: #cc0000;
     color: #fff;
     font-size: 2vw;
@@ -6894,4 +6895,18 @@ td.visible-print {
     background:#A9A9A9;
     color: #fff;
     font-size: 2vw;
+}
+
+#accordion h3.account-name {
+    padding-left: 17%;
+    background: #cc0000;
+    color: #fff;
+    font-size: 2vw;
+}
+
+#accordion span.backups-failed {
+    float: right;
+    background: #cc0000;
+    color: #fff;
+    font-size: 1.5vw;
 }

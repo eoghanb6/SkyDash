@@ -56,7 +56,7 @@
     }
     else if (account.allBackupsStatus == false)
     {
-        <h3 class="account-name">@account.name</h3>
+        <h3 class="account-name">@account.name<span class="backups-failed">Backups Failed: @account.numberFailedBackups</span></h3>
     }
     else
     {
@@ -90,7 +90,7 @@
                         <div class="panel-body-fail"  id="btn-@vm.counter">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
-                                <li>@vm.LastBackup.Replace("Failed on the night of:", "")</li>
+                                <li>@vm.LastBackup.Replace("on the night of:", "")</li>
                             </ul>
                         </div>
                      }

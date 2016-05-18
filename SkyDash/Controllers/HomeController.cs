@@ -46,6 +46,7 @@ namespace SkyDash.Controllers
                                 {
                                     if (virtualMachine.LastBackupStatus.Contains("Failed")) {
                                         viewModel.accounts[i].allBackupsStatus = false;
+                                        viewModel.accounts[i].numberFailedBackups++;
                                     }
                                     PanelVM panelVm = new PanelVM();
                                     {
