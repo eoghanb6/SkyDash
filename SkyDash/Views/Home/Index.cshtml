@@ -107,7 +107,7 @@
                     <div id="wrap">
                         <div id="left_col">
                             <h5>ID:</h5>@vm.Id
-                            <h5>Size::</h5>@vm.Size 
+                            <h5>Size:</h5>@vm.Size 
                             <h5>Operating System:</h5>@vm.OperatingSystem
                             <h5>Number of CPUs:</h5>@vm.NumberOfCPUs
                             <h5>Memory:</h5>@vm.Memory Mb
@@ -132,7 +132,8 @@
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
                             </ul>
-                            <button id="btnb-@vm.counter" class="btn btn-primary button-align-left">Backups</button><button id="btni-@vm.counter" class="btn btn-primary button-align-right">VM Info</button>
+                            <button id="btnb-@vm.counter" class="btn btn-primary  btn-responsive">Backups</button>
+                            <button id="btni-@vm.counter" class="btn btn-primary  btn-responsive">VM Info</button>
                         </div>
                      }
                      else if (vm.LastBackupStatus == "Failed")
@@ -142,7 +143,8 @@
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup.Replace("on the night of:", "")</li>
                             </ul>
-                            <button id="btnb-@vm.counter" class="btn btn-primary button-align-left">Backups</button><button id="btni-@vm.counter" class="btn btn-primary button-align-right">VM Info</button>
+                            <button id="btnb-@vm.counter" class="btn btn-primary button-align-left">Backups</button>
+                            <button id="btni-@vm.counter" class="btn btn-primary button-align-right">VM Info</button>
                         </div>
                      }
                      else
@@ -152,7 +154,8 @@
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup</li>
                             </ul>
-                            <button id="btnb-@vm.counter" class="btn btn-primary button-align-left">Backups</button><button id="btni-@vm.counter" class="btn btn-primary button-align-right">VM Info</button>
+                            <button id="btnb-@vm.counter" class="btn btn-primary button-align-left">Backups</button>
+                            <button id="btni-@vm.counter" class="btn btn-primary button-align-right">VM Info</button>
                         </div>
                      } 
                 </div>

@@ -6909,7 +6909,6 @@ td.visible-print {
 }
 
 #accordion h3.account-name {
-    padding-left: 17%;
     background: #cc0000;
     color: #fff;
     font-size: 2vw;
@@ -6923,11 +6922,11 @@ td.visible-print {
 }
 
 .button-align-right {
-    margin-left :8vw;
+    margin-left :9vw;
 }
 
 .button-align-left {
-    margin-left : 3vw;
+    margin-left : 2.5vw;
 }
 
 h5 {
@@ -6947,7 +6946,28 @@ h5 {
    float:right;
    width:300px;
    margin-right:-20%;
+}
+.floated {
+   float:left;
+   margin-right:5px;
+}
 
+  
+@media (max-width: 768px) {
+  .btn-responsive {
+    padding:2px 4px;
+    font-size:80%;
+    line-height: 1;
+    border-radius:3px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 992px) {
+  .btn-responsive {
+    padding:4px 9px;
+    font-size:90%;
+    line-height: 1.2;
+  }
 }
 
 
