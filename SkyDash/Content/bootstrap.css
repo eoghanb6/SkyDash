@@ -6826,7 +6826,7 @@ td.visible-print {
     width: 110%;
     height: 100%;
     background:#76EE00;
-    cursor: pointer;
+    
 }
 
 .panel-body-fail {
@@ -6836,7 +6836,7 @@ td.visible-print {
     width: 110%;
     height: 100%;
     background:#ff0000;
-    cursor: pointer;
+    
 }
 
 .panel-body-excluded {
@@ -6862,11 +6862,18 @@ td.visible-print {
     list-style-type: none;
 }
 
-.account-name {
+.title{
     font-size: 3vw;
     text-align: center;
     font-weight: 600;
     clear: both;
+}
+
+.account-name {
+    font-size: 3vw;
+    font-weight: 600;
+    clear: both;
+    text-align: left;
 }
 
 .authenticate {
@@ -6874,9 +6881,13 @@ td.visible-print {
     font-size: 1vw;
 }
 
-.dialog-content {
+.dialog-content-info {
+    margin-left: 13%;
+} 
+.dialog-content-backup {
     margin-left: 10%;
 } 
+
 
 #accordion h2{
     background: #00cc00;
@@ -6910,3 +6921,35 @@ td.visible-print {
     color: #fff;
     font-size: 1.5vw;
 }
+
+.button-align-right {
+    margin-left :8vw;
+}
+
+.button-align-left {
+    margin-left : 3vw;
+}
+
+h5 {
+    font-weight: 600;
+ 
+    clear:both;
+}
+#wrap {
+   width:600px;
+   margin:0 auto;
+}
+#left_col {
+   float:left;
+   width:300px;
+}
+#right_col {
+   float:right;
+   width:300px;
+   margin-right:-20%;
+
+}
+
+
+
+

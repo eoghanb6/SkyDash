@@ -56,6 +56,16 @@ namespace SkyDash.Controllers
                                         panelVm.LastBackup = virtualMachine.LastBackup;
                                         panelVm.backups = virtualMachine.Backups;
                                         panelVm.Id = virtualMachine.Id;
+                                        panelVm.Size = virtualMachine.Size;
+                                        panelVm.MonthToDate = virtualMachine.MonthToDate;
+                                        panelVm.EstimatedMonthlyTotal = virtualMachine.EstimatedMonthlyTotal;
+                                        panelVm.BilledHoursPoweredOn = virtualMachine.BilledHoursPoweredOn;
+                                        panelVm.BilledHoursPoweredOff = virtualMachine.BilledHoursPoweredOff;
+                                        panelVm.PowerStatus = virtualMachine.PowerStatus;
+                                        panelVm.OperatingSystem = virtualMachine.OperatingSystem;
+                                        panelVm.NumberOfCPUs = virtualMachine.NumberOfCPUs;
+                                        panelVm.Memory = virtualMachine.Memory;
+                                        panelVm.Storage = virtualMachine.Storage;
                                         panelVm.counter = k++;
                                     }
                                     viewModel.accountVms.Add(panelVm);

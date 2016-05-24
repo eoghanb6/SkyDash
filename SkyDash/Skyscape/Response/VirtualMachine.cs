@@ -94,5 +94,16 @@ namespace Skydash.Response
         public List<Backup> backups;
         public List<Account> Accounts;
         public int counter;
+        public string Size;
+        public string MonthToDate;
+        public string EstimatedMonthlyTotal;
+        public int? BilledHoursPoweredOn;
+        public int? BilledHoursPoweredOff;
+        public string PowerStatus;
+        public string OperatingSystem;
+        public string NumberOfCPUs;
+        public int Memory;
+        public int Storage;
+        public string lastbackupStatus;
     }
 }

@@ -17,7 +17,7 @@
     {
         <script type="text/javascript">
             $(function () {
-                $('#dialog-@vm.counter').dialog({
+                $('#dialogb-@vm.counter').dialog({
                     autoOpen: false,
                     width: 450,
                     height: 610,
@@ -33,20 +33,48 @@
                     open: function () {
                         jQuery('.ui-widget-overlay').bind('click', function () {
                             $('.ui-dialog-titlebar-close').hide();
-                            jQuery('#dialog-@vm.counter').dialog('close');
+                            jQuery('#dialogb-@vm.counter').dialog('close');
                         })
                     }
                 }).prev(".ui-dialog-titlebar").css({ "background": "#428bca", "font-size": "1.5vw", "text-align": "center", "color": "#ffffff"});
             });
 
-            $('#btn-@vm.counter').click(function () {
-                $('#dialog-@vm.counter').dialog("open");
+            $('#btnb-@vm.counter').click(function () {
+                $('#dialogb-@vm.counter').dialog("open");
+            });
+        </script>
+        <script type="text/javascript">
+            $(function () {
+                $('#dialogi-@vm.counter').dialog({
+                    autoOpen: false,
+                    width: 850,
+                    height: 550,
+                    modal: true,
+                    show: {
+                        effect: "blind",
+                        duration: 300
+                    },
+                    hide: {
+                        effect: "blind",
+                        duration: 300
+                    },
+                    open: function () {
+                        jQuery('.ui-widget-overlay').bind('click', function () {
+                            $('.ui-dialog-titlebar-close').hide();
+                            jQuery('#dialogi-@vm.counter').dialog('close');
+                        })
+                    }
+                }).prev(".ui-dialog-titlebar").css({ "background": "#428bca", "font-size": "1.5vw", "text-align": "center", "color": "#ffffff"});
+            });
+
+            $('#btni-@vm.counter').click(function () {
+                $('#dialogi-@vm.counter').dialog("open");
             });
         </script>
     }
 }
+<h1 class="title">Backups</h1>
 
-<h1 class="authenticate">@ViewBag.response</h1>
 <div id="accordion">
 @foreach (var account in Model.accounts)
 {
@@ -67,22 +95,44 @@
         {
             if (vm.AccountId == account.id)
             {
-                <div id="dialog-@vm.counter" title="@vm.Name">
-                    <h1 class="dialog-content">Backups</h1>
+                <div id="dialogb-@vm.counter" title="@vm.Name">
+                    <h1 class="dialog-content-backup">Backups</h1>
                     @foreach (var backup in vm.backups)
                     {
                         <ul>@backup.BackupEnd - @backup.Status</ul>
                     }
                 </div>
-                <div class="col-md-2" id="btn-@vm.counter">
+                <div id="dialogi-@vm.counter" title="@vm.Name">
+                    <h1 class="dialog-content-info" align="left">VM Information</h1>
+                    <div id="wrap">
+                        <div id="left_col">
+                            <h5>ID:</h5>@vm.Id
+                            <h5>Size::</h5>@vm.Size 
+                            <h5>Operating System:</h5>@vm.OperatingSystem
+                            <h5>Number of CPUs:</h5>@vm.NumberOfCPUs
+                            <h5>Memory:</h5>@vm.Memory Mb
+                            <h5>Storage:</h5>@vm.Storage Mb
+
+                        </div>
+                        <div id="right_col">
+                            <h5>Account ID:</h5>@vm.AccountId
+                            <h5>Power Status:</h5>@vm.PowerStatus
+                            <h5>Month To Date:</h5>£@vm.MonthToDate
+                            <h5>Estimated Monthly Total:</h5>£@vm.EstimatedMonthlyTotal
+                            <h5>Billed Hours Powered On:</h5>@vm.BilledHoursPoweredOn Hours 
+                            <h5>Billed Hours Powered Off:</h5>@vm.BilledHoursPoweredOff Hours
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
                      @if (vm.LastBackupStatus == "Successful")
                      {
-
                         <div class="panel-body-success">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
                             </ul>
+                            <button id="btnb-@vm.counter" class="btn btn-primary button-align-left">Backups</button><button id="btni-@vm.counter" class="btn btn-primary button-align-right">VM Info</button>
                         </div>
                      }
                      else if (vm.LastBackupStatus == "Failed")
@@ -92,6 +142,7 @@
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup.Replace("on the night of:", "")</li>
                             </ul>
+                            <button id="btnb-@vm.counter" class="btn btn-primary button-align-left">Backups</button><button id="btni-@vm.counter" class="btn btn-primary button-align-right">VM Info</button>
                         </div>
                      }
                      else
@@ -101,6 +152,7 @@
                                 <li class="vm-name">@vm.Name</li>
                                 <li>@vm.LastBackup</li>
                             </ul>
+                            <button id="btnb-@vm.counter" class="btn btn-primary button-align-left">Backups</button><button id="btni-@vm.counter" class="btn btn-primary button-align-right">VM Info</button>
                         </div>
                      } 
                 </div>
