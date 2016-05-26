@@ -12,7 +12,7 @@ namespace SkyDash.Controllers
     public class HomeController : Controller
     {
         [OutputCache(Duration = 240)]
-        public ActionResult Index()
+        public ActionResult Backups()
         {
             var api = new APIMethods();
 

@@ -244,7 +244,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Backups.cshtml" />
     <Content Include="Views\ViewModel.cshtml" />
     <Content Include="Views\VMview.cshtml" />
     <Content Include="Views\Home\Snapshots.cshtml" />
