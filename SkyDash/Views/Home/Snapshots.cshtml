@@ -1,3 +1,104 @@
-﻿
-<h1 class="title">Snapshots</h1>
+﻿@model SkyDash.ViewModels.SnapshotViewModel
 
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section scripts{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#accordion").accordion({
+                clearstyle: true,
+                collapsible: true, //allow accordion to be completely collapsed showing only the headers
+                active: 0, //open first accordion on load
+                heightStyle: "content", //The accordion opens to fit the content
+            });
+        });
+    </script>
+
+    @foreach (var snapshot in Model.snapshots)
+    {
+        <script type="text/javascript">
+            $(function () {
+                $('#dialog-@snapshot.counter').dialog({
+                    autoOpen: false,
+                    width: 450,
+                    height: 610,
+                    modal: true,
+                    show: {
+                        effect: "blind",
+                        duration: 300
+                    },
+                    hide: {
+                        effect: "blind",
+                        duration: 300
+                    },
+                    open: function () {
+                        jQuery('.ui-widget-overlay').bind('click', function () {
+                            $('.ui-dialog-titlebar-close').hide();
+                            jQuery('#dialog-@snapshot.counter').dialog('close');
+                        })
+                    }
+                }).prev(".ui-dialog-titlebar").css({ "background": "#428bca", "font-size": "1.5vw", "text-align": "center", "color": "#ffffff"});
+            });
+
+            $('#btn-@snapshot.counter').click(function () {
+                $('#dialog-@snapshot.counter').dialog("open");
+            });
+        </script>
+    }
+}
+<h1 class="title">Snapshots</h1>
+<div id="accordion">
+    @foreach (var account in Model.accounts)
+    {
+        if (account.numberOldSnapshots > 0)
+        {
+            <h3 class="account-name">@account.name<span class="backups-failed">Snapshots over 3 days old: @account.numberOldSnapshots</span></h3>
+        }
+        else
+        {
+            <h2 class="account-name">@account.name</h2>
+        }
+        <div>
+            @foreach (var snapshot in Model.snapshots)
+            {
+                if (snapshot.accountId == account.id)
+                {
+                    <div id="dialog-@snapshot.counter" title="@snapshot.Name">
+                        <h1 class="dialog-content no-bullet">Snapshot Information</h1>
+                        <ul class="no-bullet">
+                            <li>@snapshot.Name</li>
+                            <li>@snapshot.Status</li>
+                            <li>@snapshot.vApp</li>
+                            <li>@snapshot.vDC</li>
+                            <li>@snapshot.SnapshotSize</li>
+                            <li>@snapshot.DateCreated.ToString("g")</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-2" id="btn-@snapshot.counter">
+                        @if (snapshot.DateCreated.AddDays(6).Day < DateTime.Now.Day)
+                        {
+                            <div class="panel-body-fail">
+                                <ul class="no-bullet center">
+                                    <li class="vm-name">@snapshot.Name</li>
+                                    <li>@snapshot.DateCreated.ToString("g")</li>
+                                </ul>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="panel-body-success" id="btn-@snapshot.counter">
+                                <ul class="no-bullet center">
+                                    <li class="vm-name">@snapshot.Name</li>
+                                    <li>@snapshot.DateCreated.ToString("g")</li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                }
+            }
+        </div>
+    }
+</div>
