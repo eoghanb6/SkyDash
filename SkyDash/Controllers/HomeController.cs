@@ -11,31 +11,44 @@ namespace SkyDash.Controllers
 {
     public class HomeController : Controller
     {
+       //Creates a cache of 240 seconds
         [OutputCache(Duration = 240)]
+        
+        //Create the view for the Backups screen
         public ActionResult Backups()
         {
+            //Initializes a new api call to Skyscape
             var api = new APIMethods();
 
+            //Authentication details passed through from config class
             var authenticate = api.authenticate(Config.email, Config.password);
             var accounts = api.getAccounts();
 
+            //Generates viewModels for view
             VmViewModel viewModel = new VmViewModel();
             viewModel.names = new List<string>();
             viewModel.accountVms = new List<PanelVM>();
             viewModel.accounts = new List<Account>();
             viewModel.backups = new List<Backup>();
 
+            // "expires_after : 900" means a successful authentication
             if (authenticate.Content == "{\"expires_after\":900}")
             {
+                //Generates counter to uniquely identify JQuery dialogs in Backup view
                 int k = 0;
                 ViewBag.response = "Authentication successful";
-
+                
+                //Deserializes JSON string into account objects
                 viewModel.accounts = JsonConvert.DeserializeObject<List<Account>>(accounts.Content);
+                //Loop through deserialized accounts
                 for (int i = 0; i < viewModel.accounts.Count; i++)
                 { 
+                    //getVms makes the call to Skyscape to retrieve vm/backup information
                     var vms = api.getVms(viewModel.accounts[i].id);
+                    //result is the objects of the returned deserialized JSON String from the API with a set DateTimeFormat included
                     var result = JsonConvert.DeserializeObject<Result>(vms.Content, new IsoDateTimeConverter { DateTimeFormat = "dd/MM/yyyy HH:mm" });
 
+                    //To create VM objects, must loop through the different levels of JSON String
                     foreach (var vOrg in result.vOrgs)
                     {
                         foreach (var vDC in vOrg.VDCs)
@@ -44,10 +57,12 @@ namespace SkyDash.Controllers
                             {
                                 foreach (var virtualMachine in vApp.VMs)
                                 {
+                                    //If any VM within an account has at a last backup which failed, count this fail to display in accordion view
                                     if (virtualMachine.LastBackupStatus.Contains("Failed")) {
                                         viewModel.accounts[i].allBackupsStatus = false;
                                         viewModel.accounts[i].numberFailedBackups++;
                                     }
+                                    //create new instance of PanelVM
                                     PanelVM panelVm = new PanelVM();
                                     {
                                         panelVm.AccountId = result.Account.id;
@@ -55,7 +70,7 @@ namespace SkyDash.Controllers
                                         panelVm.LastBackupStatus = virtualMachine.LastBackupStatus;
                                         panelVm.LastBackup = virtualMachine.LastBackup;
                                         panelVm.backups = virtualMachine.Backups;
-                                        panelVm.Id = virtualMachine.Id;
+                                        panelVm.Id = virtualMachine.Id; //Not suitable as unique identifier for VM as may be duplicate in other accounts
                                         panelVm.Size = virtualMachine.Size;
                                         panelVm.MonthToDate = virtualMachine.MonthToDate;
                                         panelVm.EstimatedMonthlyTotal = virtualMachine.EstimatedMonthlyTotal;
@@ -66,8 +81,9 @@ namespace SkyDash.Controllers
                                         panelVm.NumberOfCPUs = virtualMachine.NumberOfCPUs;
                                         panelVm.Memory = virtualMachine.Memory;
                                         panelVm.Storage = virtualMachine.Storage;
-                                        panelVm.counter = k++;
+                                        panelVm.counter = k++; //counter allows unique ID of VM without using any Skyscape data as key for VM
                                     }
+                                    //Must add panelVm to view model in order to use in Backups view
                                     viewModel.accountVms.Add(panelVm);
                                 }
                             }
@@ -75,11 +91,11 @@ namespace SkyDash.Controllers
                     }
                 }
             }
-            else
+            else //API Authentication has failed
             {
                 ViewBag.response = "Authentication Failed";
             }
-            return View(viewModel);
+            return View(viewModel); // Must return viewModel to create view
         }
 
         [OutputCache(Duration = 180)]

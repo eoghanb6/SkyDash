@@ -2,6 +2,7 @@
 
 @section scripts{
 
+    <!--JqueryUI Script to generate accordion view (Collapsable account names)-->
     <script type="text/javascript">
         $(document).ready(function () {
             $("#accordion").accordion({
@@ -12,10 +13,12 @@
             });
         });
     </script>    
-    @{int i = 1;}
+    <!--Loop through VMs within Accounts to generate DIVs and corresponding buttons for JQuery Dialog boxes  (Used for Backups/Info)-->
     @foreach (var vm in Model.accountVms)
     {
         <script type="text/javascript">
+            //Create Backup Dialog for each VM
+            //vm.counter used to create unique div ids. dialog will match with corresponding button based on id. 
             $(function () {
                 $('#dialogb-@vm.counter').dialog({
                     autoOpen: false,
@@ -39,11 +42,14 @@
                 }).prev(".ui-dialog-titlebar").css({ "background": "#428bca", "font-size": "1.5vw", "text-align": "center", "color": "#ffffff"});
             });
 
+            //Create Backup dialog button for each VM 
+            //Counter used again to correspond to unique div
             $('#btnb-@vm.counter').click(function () {
                 $('#dialogb-@vm.counter').dialog("open");
             });
         </script>
         <script type="text/javascript">
+            //Create Info dialog for each VM
             $(function () {
                 $('#dialogi-@vm.counter').dialog({
                     autoOpen: false,
@@ -66,35 +72,39 @@
                     }
                 }).prev(".ui-dialog-titlebar").css({ "background": "#428bca", "font-size": "1.5vw", "text-align": "center", "color": "#ffffff"});
             });
-
+            //Create info dialog button for each VM
             $('#btni-@vm.counter').click(function () {
                 $('#dialogi-@vm.counter').dialog("open");
             });
         </script>
     }
 }
+<!--Main Title-->
 <h1 class="title">Backups</h1>
 
+<!--Accordion defined in JS used as Div-->
 <div id="accordion">
+    <!--Loop through accounts to generate accordion headers -->
 @foreach (var account in Model.accounts)
 {
     if (account.allBackupsStatus == true)
     {
+        <!--Generates success accordion header (All backups success)-->
         <h2 class="account-name">@account.name</h2>
-    }
-    else if (account.allBackupsStatus == false)
-    {
-        <h3 class="account-name">@account.name<span class="backups-failed">Backups Failed: @account.numberFailedBackups</span></h3>
     }
     else
     {
-        <h4 class="account-name">@account.name</h4>
+        <!--Header created including "Backups failed" will display if multiple backups have failed within that account. Displays number of failed backups in accordion-->
+        <h3 class="account-name">@account.name<span class="backups-failed">Backups Failed: @account.numberFailedBackups</span></h3>
     }
     <div>
+
+        <!--Gets List of VMs from view Model-->
         @foreach (var vm in Model.accountVms)
         {
             if (vm.AccountId == account.id)
             {
+                <!--Creates div which acts as JQuery dialog for backup information-->
                 <div id="dialogb-@vm.counter" title="@vm.Name">
                     <h1 class="dialog-content-backup">Backups</h1>
                     @foreach (var backup in vm.backups)
@@ -102,6 +112,8 @@
                         <ul>@backup.BackupEnd - @backup.Status</ul>
                     }
                 </div>
+
+                <!--Creates div which acts as JQuery dialog for VM information-->
                 <div id="dialogi-@vm.counter" title="@vm.Name">
                     <h1 class="dialog-content-info" align="left">VM Information</h1>
                     <div id="wrap">
@@ -112,7 +124,6 @@
                             <h5>Number of CPUs:</h5>@vm.NumberOfCPUs
                             <h5>Memory:</h5>@vm.Memory Mb
                             <h5>Storage:</h5>@vm.Storage Mb
-
                         </div>
                         <div id="right_col">
                             <h5>Account ID:</h5>@vm.AccountId
@@ -124,29 +135,36 @@
                         </div>
                     </div>
                 </div>
+                <!--If last backup was a success create success panel-->
                 <div class="col-md-2">
                      @if (vm.LastBackupStatus == "Successful")
                      {
                         <div class="panel-body-success">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
-                                <li>@vm.LastBackup.Replace("Completed on the night of:", "")</li>
+                                <!--Backup slot provides night of back up. Only display date in panel-->
+                                <li>@vm.backups[0].BackupSlot.Replace("night of:", "")</li>
                             </ul>
+                            <!--Unique buttons created corresponding to VM in foreach position-->
                             <button id="btnb-@vm.counter" class="btn btn-primary  btn-responsive">Backups</button>
                             <button id="btni-@vm.counter" class="btn btn-primary  btn-responsive">VM Info</button>
                         </div>
                      }
+                    //If last backup was a fail create success panel. "Completed with exception(s)" treated as a fail
                      else if (vm.LastBackupStatus == "Failed")
                      {
                         <div class="panel-body-fail"  id="btn-@vm.counter">
                             <ul class="no-bullet center">
                                 <li class="vm-name">@vm.Name</li>
-                                <li>@vm.LastBackup.Replace("on the night of:", "")</li>
+                                <!--Status provides fail information-->
+                                <li>@vm.backups[0].Status</li>
+                                <li>@vm.backups[0].BackupSlot.Replace("night of:", "")</li>
                             </ul>
                             <button id="btnb-@vm.counter" class="btn btn-primary button-align-left">Backups</button>
                             <button id="btni-@vm.counter" class="btn btn-primary button-align-right">VM Info</button>
                         </div>
                      }
+                    //if no lastbackupstatus, generate panel. Not treated as a fail
                      else
                      {
                         <div class="panel-body-excluded"  id="btn-@vm.counter">

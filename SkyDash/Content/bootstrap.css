@@ -6922,11 +6922,11 @@ td.visible-print {
 }
 
 .button-align-right {
-    margin-left :9vw;
+    margin-left: 1vw;
 }
 
 .button-align-left {
-    margin-left : 2.5vw;
+    margin-left : 0vw;
 }
 
 h5 {

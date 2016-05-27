@@ -7,6 +7,7 @@ namespace Skydash.Response
 {
     public class VirtualMachine
     {
+        //Get and Set VM properties to set instances ov VM objects
         [JsonProperty("_id")]
         public int Id { get; set; }
 
@@ -21,7 +22,7 @@ namespace Skydash.Response
 
         [JsonProperty("monthToDate")]
         public string MonthToDate { get; set; }
-        public decimal? CostToDate
+        public decimal? CostToDate //If decimal, must be changed to currency, only if > 0. No Cost property changed to Null rather than 0
         {
             get
             {
@@ -35,7 +36,7 @@ namespace Skydash.Response
 
         [JsonProperty("estimatedMonthlyTotal")]
         public string EstimatedMonthlyTotal { get; set; }
-        public decimal? EstimatedMonthlyCost
+        public decimal? EstimatedMonthlyCost //If decimal, must be changed to currency, only if > 0. No Cost property changed to Null rather than 0
         {
             get
             {
@@ -83,7 +84,7 @@ namespace Skydash.Response
         [JsonProperty("backups")]
         public List<Backup> Backups { get; set; }
     }
-
+    //Properties added to PanelVM view model
     public class PanelVM
     {
         public int Id;

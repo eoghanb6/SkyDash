@@ -14,6 +14,7 @@ namespace SkyDash.Skyscape.Response
         [JsonProperty("id")]
         public int id { get; set; }
 
+        //initialize variables to be changed within controller
         public bool allBackupsStatus = true;
         public int numberFailedBackups = 0;
     }
