@@ -152,13 +152,14 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Config.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Skyscape\Response\Account.cs" />
     <Compile Include="Skyscape\Response\Result.cs" />
+    <Compile Include="Skyscape\Response\User.cs" />
     <Compile Include="Skyscape\Response\VDC.cs" />
     <Compile Include="Skyscape\Response\VirtualApp.cs" />
     <Compile Include="Skyscape\Response\VirtualMachine.cs" />
@@ -243,11 +244,12 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\Backups.cshtml" />
     <Content Include="Views\ViewModel.cshtml" />
     <Content Include="Views\VMview.cshtml" />
     <Content Include="Views\Home\Snapshots.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Shared\Login_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

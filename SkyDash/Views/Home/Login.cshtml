@@ -1,14 +1,13 @@
-﻿<h1>SkyDash</h1>
-<img src=".\SkyDash\SkyDash\Views\HomeEoghan.PNG" />
-<h2>Login using your Skyscape credentials</h2>
-<h3>Username: </h3>
-<input type="text" id="username" />
-<h3>Password: </h3>
-<input type="text" id="password" />
-<input type="submit" id="submit" onclick="storeCreds()" />
-
-@helper storeCreds()
+﻿@model SkyDash.ViewModels.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/Login_Layout.cshtml";
+}
+<h2>Login</h2>
+@using (Html.BeginForm("PostLogin", "Home", FormMethod.Post))
 {
-Config.email = Request.Form["username"];
-Config.password = Request.Form["password"];
+    <h3>Username:</h3><input type ="text" id="skyscapeUsername" name="skyscapeUsername" />
+    <h3>Password:</h3><input type="password" id="skyscapePassword" name="skyscapePassword" />
+    @ViewBag.response
+    <button id="submit" type="submit">Login</button>
 }

@@ -11,17 +11,44 @@ namespace SkyDash.Controllers
 {
     public class HomeController : Controller
     {
-       //Creates a cache of 240 seconds
+        //Creates a cache of 240 seconds
         [OutputCache(Duration = 240)]
-        
+
+        public ActionResult PostLogin(string skyscapeUsername, string skyscapePassword) {
+            
+            var api = new APIMethods();
+            var authenticate = api.authenticate(skyscapeUsername, skyscapePassword);
+            if (authenticate.Content == "{\"expires_after\":900}")
+            {
+                
+                Session["SkyscapeUsername"] = skyscapeUsername;
+                Session["SkyscapePassword"] = skyscapePassword;
+                return RedirectToAction("Backups", "Home");
+            }
+            else
+            {
+                return RedirectToAction("Login", "Home");
+            }
+        }
+
+        public ActionResult Logout() {
+            Session.Remove("SkyscapeUsername");
+            Session.Remove("SkyscapePassword");
+            return RedirectToAction("Login", "Home");
+        }
+
+
         //Create the view for the Backups screen
         public ActionResult Backups()
         {
+            string username = Session["SkyscapeUsername"] as string;
+            string password = Session["SkyscapePassword"] as string;
+
             //Initializes a new api call to Skyscape
             var api = new APIMethods();
 
             //Authentication details passed through from config class
-            var authenticate = api.authenticate(Config.email, Config.password);
+            var authenticate = api.authenticate(username, password);
             var accounts = api.getAccounts();
 
             //Generates viewModels for view
@@ -94,6 +121,7 @@ namespace SkyDash.Controllers
             else //API Authentication has failed
             {
                 ViewBag.response = "Authentication Failed";
+                return RedirectToAction("Login", "Home");
             }
             return View(viewModel); // Must return viewModel to create view
         }
@@ -102,6 +130,15 @@ namespace SkyDash.Controllers
         public ActionResult Snapshots()
         {
             SnapshotViewModel viewModel = new SnapshotViewModel();
+            return View(viewModel);
+        }
+
+        [OutputCache(Duration = 180)]
+        public ActionResult Login()
+        {
+            LoginViewModel viewModel = new LoginViewModel();
+            Session.Remove("SkyscapeUsername");
+            Session.Remove("SkyscapePassword");
             return View(viewModel);
         }
     }

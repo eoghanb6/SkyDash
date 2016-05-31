@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SkyDash.ViewModels
 {
-    public class SnapshotViewModel
+    internal class SnapshotViewModel
     {
     }
 }
