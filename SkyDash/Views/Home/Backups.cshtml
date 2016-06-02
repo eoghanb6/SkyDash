@@ -76,6 +76,12 @@
             $('#btni-@vm.counter').click(function () {
                 $('#dialogi-@vm.counter').dialog("open");
             });
+
+            //Submit a ticket - button
+            $('#btnt-@vm.counter').click(function () {
+                $('#dialogt-@vm.counter').dialog("open");
+            });
+
         </script>
     }
 }
@@ -148,6 +154,7 @@
                             <!--Unique buttons created corresponding to VM in foreach position-->
                             <button id="btnb-@vm.counter" class="btn btn-primary  btn-responsive">Backups</button>
                             <button id="btni-@vm.counter" class="btn btn-primary  btn-responsive">VM Info</button>
+                            <button id="btnt-@vm.counter" class="btn btn-primary  btn-responsive">Ticket</button>
                         </div>
                      }
                     //If last backup was a fail create success panel. "Completed with exception(s)" treated as a fail
