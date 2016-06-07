@@ -1100,7 +1100,6 @@ pre code {
   }
   .col-md-2 {
     position: relative;
-    float: left;
     width: 24%;
     margin-right: 0.7vw;
     margin-bottom: 0.5vw;
@@ -6826,7 +6825,7 @@ td.visible-print {
     width: 110%;
     height: 100%;
     background:#76EE00;
-    
+    float: left;
 }
 
 .panel-body-fail {
@@ -6836,7 +6835,7 @@ td.visible-print {
     width: 110%;
     height: 100%;
     background:#ff0000;
-    
+    float: left;
 }
 
 .panel-body-excluded {
@@ -6888,7 +6887,6 @@ td.visible-print {
     margin-left: 10%;
 } 
 
-
 #accordion h2{
     background: #00cc00;
     color: #fff;
@@ -6931,7 +6929,6 @@ td.visible-print {
 
 h5 {
     font-weight: 600;
- 
     clear:both;
 }
 #wrap {
@@ -6951,7 +6948,6 @@ h5 {
    float:left;
    margin-right:5px;
 }
-
   
 @media (max-width: 768px) {
   .btn-responsive {
@@ -6970,6 +6966,19 @@ h5 {
   }
 }
 
+.clickable {
+    cursor: pointer;
+}
 
+header {
+    text-align: left;
+    font-weight: 800;
+    font-size: medium;
+    float: left;
+}
 
+h6 {
+    text-align: right;
+    font-size: medium;
+}
 

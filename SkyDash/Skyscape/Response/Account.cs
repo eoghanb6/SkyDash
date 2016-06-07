@@ -17,5 +17,8 @@ namespace SkyDash.Skyscape.Response
         //initialize variables to be changed within controller
         public bool allBackupsStatus = true;
         public int numberFailedBackups = 0;
+        public int numberOldSnapshots = 0;
+        public Dictionary<string, int> vCloudToken;
+        public Dictionary<string, vCloudIdentifiers> vCloudCredentials;
     }
 }

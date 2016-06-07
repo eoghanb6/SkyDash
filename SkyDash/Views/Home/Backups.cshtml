@@ -13,6 +13,7 @@
             });
         });
     </script>    
+
     <!--Loop through VMs within Accounts to generate DIVs and corresponding buttons for JQuery Dialog boxes  (Used for Backups/Info)-->
     @foreach (var vm in Model.accountVms)
     {
@@ -146,8 +147,8 @@
                                 <li>@vm.backups[0].BackupSlot.Replace("night of:", "")</li>
                             </ul>
                             <!--Unique buttons created corresponding to VM in foreach position-->
-                            <button id="btnb-@vm.counter" class="btn btn-primary  btn-responsive">Backups</button>
-                            <button id="btni-@vm.counter" class="btn btn-primary  btn-responsive">VM Info</button>
+                            <button id="btnb-@vm.counter" class="btn btn-primary btn-responsive">Backups</button>
+                            <button id="btni-@vm.counter" class="btn btn-primary btn-responsive">VM Info</button>
                         </div>
                      }
                     //If last backup was a fail create success panel. "Completed with exception(s)" treated as a fail

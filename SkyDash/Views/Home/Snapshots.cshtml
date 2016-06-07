@@ -1,11 +1,8 @@
 ﻿@model SkyDash.ViewModels.SnapshotViewModel
 
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
 @section scripts{
 
+    <!--JqueryUI Script to generate accordion view (Collapsable account names)-->
     <script type="text/javascript">
         $(document).ready(function () {
             $("#accordion").accordion({
@@ -17,41 +14,49 @@
         });
     </script>
 
-    @foreach (var snapshot in Model.snapshots)
+    <!--Loop through VMs within Accounts to generate DIVs and corresponding buttons for JQuery Dialog boxes  (Used for Backups/Info)-->
+    @foreach (var vmItem in Model.Vms)
     {
-        <script type="text/javascript">
-            $(function () {
-                $('#dialog-@snapshot.counter').dialog({
-                    autoOpen: false,
-                    width: 450,
-                    height: 610,
-                    modal: true,
-                    show: {
-                        effect: "blind",
-                        duration: 300
-                    },
-                    hide: {
-                        effect: "blind",
-                        duration: 300
-                    },
-                    open: function () {
-                        jQuery('.ui-widget-overlay').bind('click', function () {
-                            $('.ui-dialog-titlebar-close').hide();
-                            jQuery('#dialog-@snapshot.counter').dialog('close');
-                        })
-                    }
-                }).prev(".ui-dialog-titlebar").css({ "background": "#428bca", "font-size": "1.5vw", "text-align": "center", "color": "#ffffff"});
-            });
+        foreach (var vm in vmItem.VMRecord)
+        {
+            <script type="text/javascript">
+                //Create Snapshot dialog for each VM
+                //vm.unofficialId used to create unique div ids. dialog will match with corresponding button based on id. 
+                $(function () {
+                    $('#dialog-@vm.unofficialId').dialog({
+                        autoOpen: false,
+                        width: 450,
+                        height: 610,
+                        modal: true,
+                        show: {
+                            effect: "blind",
+                            duration: 300
+                        },
+                        hide: {
+                            effect: "blind",
+                            duration: 300
+                        },
+                        open: function () {
+                            jQuery('.ui-widget-overlay').bind('click', function () {
+                                $('.ui-dialog-titlebar-close').hide();
+                                jQuery('#dialog-@vm.unofficialId').dialog('close');
+                            })
+                        }
+                    }).prev(".ui-dialog-titlebar").css({ "background": "#428bca", "font-size": "1.5vw", "text-align": "center", "color": "#ffffff" });
+                });
 
-            $('#btn-@snapshot.counter').click(function () {
-                $('#dialog-@snapshot.counter').dialog("open");
-            });
-        </script>
+                //Create Snapshot dialog button for each VM 
+                //unofficialId used again to correspond to unique div
+                $('#btn-@vm.unofficialId').click(function () {
+                    $('#dialog-@vm.unofficialId').dialog("open");
+                });
+            </script>
+        }
     }
 }
 <h1 class="title">Snapshots</h1>
 <div id="accordion">
-    @foreach (var account in Model.accounts)
+    @foreach (var account in Model.skyscapeAccounts)
     {
         if (account.numberOldSnapshots > 0)
         {
@@ -62,41 +67,41 @@
             <h2 class="account-name">@account.name</h2>
         }
         <div>
-            @foreach (var snapshot in Model.snapshots)
+            @foreach (var vmItem in Model.Vms)
             {
-                if (snapshot.accountId == account.id)
+                foreach (var vm in vmItem.VMRecord)
                 {
-                    <div id="dialog-@snapshot.counter" title="@snapshot.Name">
-                        <h1 class="dialog-content no-bullet">Snapshot Information</h1>
-                        <ul class="no-bullet">
-                            <li>@snapshot.Name</li>
-                            <li>@snapshot.Status</li>
-                            <li>@snapshot.vApp</li>
-                            <li>@snapshot.vDC</li>
-                            <li>@snapshot.SnapshotSize</li>
-                            <li>@snapshot.DateCreated.ToString("g")</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-2" id="btn-@snapshot.counter">
-                        @if (snapshot.DateCreated.AddDays(6).Day < DateTime.Now.Day)
-                        {
-                            <div class="panel-body-fail">
-                                <ul class="no-bullet center">
-                                    <li class="vm-name">@snapshot.Name</li>
-                                    <li>@snapshot.DateCreated.ToString("g")</li>
-                                </ul>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="panel-body-success" id="btn-@snapshot.counter">
-                                <ul class="no-bullet center">
-                                    <li class="vm-name">@snapshot.Name</li>
-                                    <li>@snapshot.DateCreated.ToString("g")</li>
-                                </ul>
-                            </div>
-                        }
-                    </div>
+                    if (vm.Snapshot != null && vm.Snapshot.Snapshot.accountId == account.id)
+                    {
+                        <div class="col-md-2">
+                            @if (vm.Snapshot.Snapshot.Created.AddDays(3) < DateTime.Now.Date)
+                            {
+                                <div id="btn-@vm.unofficialId" class="col-md-2 panel-body-fail clickable">
+                                    <ul class="no-bullet center">
+                                        <li class="vm-name">@vm.Name</li>
+                                        <li>@vm.Snapshot.Snapshot.Created.ToString("g")</li>
+                                    </ul>
+                                </div>
+                            }
+                            else
+                            {
+                                <div id="btn-@vm.unofficialId" class="col-md-2 panel-body-success clickable">
+                                    <ul class="no-bullet center">
+                                        <li class="vm-name">@vm.Name</li>
+                                        <li>@vm.Snapshot.Snapshot.Created.ToString("g")</li>
+                                    </ul>
+                                </div>
+                            }
+                        </div>
+                        <div id="dialog-@vm.unofficialId" title="Snapshot Information">
+                            <ul class="no-bullet">
+                                <li><h5>VM name:</h5> @vm.Name</li>
+                                <li><h5>Power status:</h5> @vm.Snapshot.Snapshot.PoweredOn</li>
+                                <li><h5>Snapshot size:</h5> @vm.Snapshot.Snapshot.SizeInGB GB</li>
+                                <li><h5>Date created:</h5> @vm.Snapshot.Snapshot.Created.ToString("g")</li>
+                            </ul>
+                        </div>
+                    }
                 }
             }
         </div>

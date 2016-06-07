@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SkyDash.Skyscape.Response
 {
-    public class Result
+    public class SkyscapeResponse
     {
         [JsonProperty("account")]
         public Account Account { get; set; }
