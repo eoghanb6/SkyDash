@@ -9,7 +9,7 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{C8A87844-E3F7-4E57-A141-B22DD69076E9}</ProjectGuid>
+    <ProjectGuid>{49E8078D-37A2-446A-8FD3-B8CB65573AD0}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -158,15 +158,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Skyscape\Response\Account.cs" />
-<<<<<<< HEAD
     <Compile Include="Skyscape\Response\SkyscapeResponse.cs" />
     <Compile Include="Skyscape\Response\vCloudIdentifiers.cs" />
     <Compile Include="vCloud\Response\QueryResultRecords.cs" />
     <Compile Include="vCloud\Response\SnapshotSection.cs" />
-=======
-    <Compile Include="Skyscape\Response\Result.cs" />
     <Compile Include="Skyscape\Response\User.cs" />
->>>>>>> 44a772cffb91b948ad3296938be91d52b0cd6154
     <Compile Include="Skyscape\Response\VDC.cs" />
     <Compile Include="Skyscape\Response\VirtualApp.cs" />
     <Compile Include="Skyscape\Response\VirtualMachine.cs" />

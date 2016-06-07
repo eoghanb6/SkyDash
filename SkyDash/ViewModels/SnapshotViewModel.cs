@@ -8,7 +8,7 @@ using static SkyDash.vCloud.Response.VMRecord;
 
 namespace SkyDash.ViewModels
 {
-    internal class SnapshotViewModel
+    public class SnapshotViewModel
     {
         public List<Account> skyscapeAccounts { get; set; }
         public Dictionary<int, Account> vCloudAccounts { get; set; }

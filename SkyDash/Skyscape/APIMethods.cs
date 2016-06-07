@@ -1,9 +1,6 @@
 ﻿using System;
 using RestSharp;
-using System.Linq;
 using System.Net;
-using System.IO;
-using SkyDash.vCloud.Response;
 
 namespace SkyDash.Skyscape
 {
@@ -16,7 +13,7 @@ namespace SkyDash.Skyscape
         {
             skyscapeClient = new RestClient("https://portal.skyscapecloud.com/api");
             vCloudClient = new RestClient("https://api.vcd.portal.skyscapecloud.com/api");
-            skyscapeClient.CookieContainer = new System.Net.CookieContainer();
+            skyscapeClient.CookieContainer = new CookieContainer();
         }
         
         public IRestResponse authenticateSkyscape(String email, String password)

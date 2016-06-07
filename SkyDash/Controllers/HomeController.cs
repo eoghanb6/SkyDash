@@ -21,7 +21,7 @@ namespace SkyDash.Controllers
         public ActionResult PostLogin(string skyscapeUsername, string skyscapePassword) {
             
             var api = new APIMethods();
-            var authenticate = api.authenticate(skyscapeUsername, skyscapePassword);
+            var authenticate = api.authenticateSkyscape(skyscapeUsername, skyscapePassword);
             if (authenticate.Content == "{\"expires_after\":900}")
             {
                 
@@ -52,11 +52,8 @@ namespace SkyDash.Controllers
             var api = new APIMethods();
 
             //Authentication details passed through from config class
-<<<<<<< HEAD
-            var authenticate = api.authenticateSkyscape(Config.email, Config.password);
-=======
-            var authenticate = api.authenticate(username, password);
->>>>>>> 44a772cffb91b948ad3296938be91d52b0cd6154
+            var authenticate = api.authenticateSkyscape(username, password);
+
             var accounts = api.getAccounts();
 
             //Generates viewModels for view
@@ -139,10 +136,12 @@ namespace SkyDash.Controllers
         [OutputCache(Duration = 180)]
         public ActionResult Snapshots()
         {
+            string username = Session["SkyscapeUsername"] as string;
+            string password = Session["SkyscapePassword"] as string;
             var api = new APIMethods();
 
             //Authentication details passed through from config class
-            var authenticate = api.authenticateSkyscape(Config.email, Config.password);
+            var authenticate = api.authenticateSkyscape(username, password);
             var accounts = api.getAccounts();
 
             SnapshotViewModel snapshotViewModel = new SnapshotViewModel();
@@ -170,7 +169,7 @@ namespace SkyDash.Controllers
                         {
                             if (key.Contains(account.name) && !key.Contains("82f326"))
                             {
-                                byte[] credentialsAsBytes = System.Text.Encoding.ASCII.GetBytes(vCloudCredential[key].username.ToString() + ":" + Config.password);
+                                byte[] credentialsAsBytes = System.Text.Encoding.ASCII.GetBytes(vCloudCredential[key].username.ToString() + ":" + password);
                                 string encodedCredentials = Convert.ToBase64String(credentialsAsBytes);
                                 vCloudAccount.vCloudToken.Add(api.authenticateVCloud(encodedCredentials), account.id);
                             }
