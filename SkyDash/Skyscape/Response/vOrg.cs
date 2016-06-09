@@ -5,6 +5,8 @@ namespace SkyDash.Skyscape.Response
 {
     public class vOrg
     {
+        //Gets and Sets vOrg properties
+        //JsonProperty used to link with properties in JSON string
         [JsonProperty("name")]
         public string Name { get; set; }
 

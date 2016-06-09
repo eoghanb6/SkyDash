@@ -17,27 +17,35 @@ namespace SkyDash.Controllers
     {
         //Creates a cache of 240 seconds
         [OutputCache(Duration = 240)]
+        //Action to check if authentication was successful
+        public ActionResult PostLogin(string skyscapeUsername, string skyscapePassword)
+        {
 
-        public ActionResult PostLogin(string skyscapeUsername, string skyscapePassword) {
-            
             var api = new APIMethods();
+            //tries to authenticate with username and password entered in Login
             var authenticate = api.authenticateSkyscape(skyscapeUsername, skyscapePassword);
+            //Checks for successful response from skyScape Portal API
             if (authenticate.Content == "{\"expires_after\":900}")
             {
-                
+                //if successful authentication, store user credentials as session variables 
                 Session["SkyscapeUsername"] = skyscapeUsername;
                 Session["SkyscapePassword"] = skyscapePassword;
+                //redirect the user to the backups page
                 return RedirectToAction("Backups", "Home");
             }
             else
             {
+                //if authentication is not successful, redirect the user back to the login controller / view.
                 return RedirectToAction("Login", "Home");
             }
         }
 
-        public ActionResult Logout() {
+        public ActionResult Logout()
+        {
+            //at logout remove session variables 
             Session.Remove("SkyscapeUsername");
             Session.Remove("SkyscapePassword");
+            //redirect user to login controller / view
             return RedirectToAction("Login", "Home");
         }
 
@@ -45,6 +53,7 @@ namespace SkyDash.Controllers
         //Create the view for the Backups screen
         public ActionResult Backups()
         {
+            //Set user credentials as session variables
             string username = Session["SkyscapeUsername"] as string;
             string password = Session["SkyscapePassword"] as string;
 
@@ -69,12 +78,12 @@ namespace SkyDash.Controllers
                 //Generates counter to uniquely identify JQuery dialogs in Backup view
                 int k = 0;
                 ViewBag.response = "Authentication successful";
-                
+
                 //Deserializes JSON string into account objects
                 vmViewModel.accounts = JsonConvert.DeserializeObject<List<Account>>(accounts.Content);
                 //Loop through deserialized accounts
                 for (int i = 0; i < vmViewModel.accounts.Count; i++)
-                { 
+                {
                     //getVms makes the call to Skyscape to retrieve vm/backup information
                     var vms = api.getSkyscapeVms(vmViewModel.accounts[i].id);
 
@@ -85,13 +94,14 @@ namespace SkyDash.Controllers
                     foreach (var vOrg in result.vOrgs)
                     {
                         foreach (var vDC in vOrg.vDCs)
-                        {                            
+                        {
                             foreach (var vApp in vDC.vApps)
                             {
                                 foreach (var virtualMachine in vApp.VMs)
                                 {
                                     //If any VM within an account has at a last backup which failed, count this fail to display in accordion view
-                                    if (virtualMachine.LastBackupStatus.Contains("Failed")) {
+                                    if (virtualMachine.LastBackupStatus.Contains("Failed"))
+                                    {
                                         vmViewModel.accounts[i].allBackupsStatus = false;
                                         vmViewModel.accounts[i].numberFailedBackups++;
                                     }
@@ -133,7 +143,6 @@ namespace SkyDash.Controllers
         }
 
         //Runs when snapshots page is opened
-        [OutputCache(Duration = 180)]
         public ActionResult Snapshots()
         {
             string username = Session["SkyscapeUsername"] as string;
@@ -231,7 +240,6 @@ namespace SkyDash.Controllers
             return View(snapshotViewModel);
         }
 
-        [OutputCache(Duration = 180)]
         public ActionResult Login()
         {
             LoginViewModel viewModel = new LoginViewModel();
@@ -239,5 +247,9 @@ namespace SkyDash.Controllers
             Session.Remove("SkyscapePassword");
             return View(viewModel);
         }
+    }
+
+        internal class LoginViewModel
+    {
     }
 }

@@ -1,13 +1,10 @@
 ﻿using SkyDash.Skyscape.Response;
 using SkyDash.vCloud.Response;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using static SkyDash.vCloud.Response.VMRecord;
 
 namespace SkyDash.ViewModels
 {
+    //Snapshot view model for information within snapshot view
     public class SnapshotViewModel
     {
         public List<Account> skyscapeAccounts { get; set; }
