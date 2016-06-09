@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 
 namespace SkyDash.vCloud.Response
 {
+    //get and set snapshot XML object
     [XmlRoot(ElementName = "Snapshot", Namespace = "http://www.vmware.com/vcloud/v1.5")]
     public class Snapshot
     {
@@ -16,7 +17,7 @@ namespace SkyDash.vCloud.Response
         public string Size { get; set; }
         public long SizeInGB;
     }
-
+    //get and set detailed info for snapshotsection object from XML 
     [XmlRoot(ElementName = "SnapshotSection", Namespace = "http://www.vmware.com/vcloud/v1.5")]
     public class SnapshotSection
     {
@@ -39,7 +40,7 @@ namespace SkyDash.vCloud.Response
         [XmlAttribute(AttributeName = "schemaLocation", Namespace = "http://www.w3.org/2001/XMLSchema-instance")]
         public string SchemaLocation { get; set; }
     }
-
+    // 
     [XmlRoot(ElementName = "Link", Namespace = "http://www.vmware.com/vcloud/v1.5")]
     public class Link
     {
@@ -50,7 +51,7 @@ namespace SkyDash.vCloud.Response
         [XmlAttribute(AttributeName = "type")]
         public string Type { get; set; }
     }
-
+    //Detailed object from VM record XML - derives from queryResultRecords
     [XmlRoot(ElementName = "VMRecord", Namespace = "http://www.vmware.com/vcloud/v1.5")]
     public class VMRecord
     {
@@ -108,7 +109,7 @@ namespace SkyDash.vCloud.Response
         [XmlAttribute(AttributeName = "catalogName")]
         public string CatalogName { get; set; }
     }
-
+    //Corresponds to API VM call in XML
     [XmlRoot(ElementName = "QueryResultRecords", Namespace = "http://www.vmware.com/vcloud/v1.5")]
     public class QueryResultRecords
     {

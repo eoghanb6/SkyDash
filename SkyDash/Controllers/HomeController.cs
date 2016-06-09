@@ -17,27 +17,33 @@ namespace SkyDash.Controllers
     {
         //Creates a cache of 240 seconds
         [OutputCache(Duration = 240)]
-
+        //Action to check if authentication was successful
         public ActionResult PostLogin(string skyscapeUsername, string skyscapePassword) {
             
             var api = new APIMethods();
+            //tries to authenticate with username and password entered in Login
             var authenticate = api.authenticateSkyscape(skyscapeUsername, skyscapePassword);
+            //Checks for successful response from skyScape Portal API
             if (authenticate.Content == "{\"expires_after\":900}")
             {
-                
+                //if successful authentication, store user credentials as session variables 
                 Session["SkyscapeUsername"] = skyscapeUsername;
                 Session["SkyscapePassword"] = skyscapePassword;
+                //redirect the user to the backups page
                 return RedirectToAction("Backups", "Home");
             }
             else
             {
+                //if authentication is not successful, redirect the user back to the login controller / view.
                 return RedirectToAction("Login", "Home");
             }
         }
 
         public ActionResult Logout() {
+            //at logout remove session variables 
             Session.Remove("SkyscapeUsername");
             Session.Remove("SkyscapePassword");
+            //redirect user to login controller / view
             return RedirectToAction("Login", "Home");
         }
 
@@ -45,6 +51,7 @@ namespace SkyDash.Controllers
         //Create the view for the Backups screen
         public ActionResult Backups()
         {
+            //Set user credentials as session variables
             string username = Session["SkyscapeUsername"] as string;
             string password = Session["SkyscapePassword"] as string;
 
@@ -84,7 +91,7 @@ namespace SkyDash.Controllers
                     //To create VM objects, must loop through the different levels of JSON String
                     foreach (var vOrg in result.vOrgs)
                     {
-                        foreach (var vDC in vOrg.VDCs)
+                        foreach (var vDC in vOrg.vDCs)
                         {                            
                             foreach (var vApp in vDC.vApps)
                             {
@@ -136,84 +143,93 @@ namespace SkyDash.Controllers
         [OutputCache(Duration = 180)]
         public ActionResult Snapshots()
         {
+            //set session variables on for snapshot controller
             string username = Session["SkyscapeUsername"] as string;
             string password = Session["SkyscapePassword"] as string;
             var api = new APIMethods();
 
-            //Authentication details passed through from config class
+            //Authentication details passed through from session variables
             var authenticate = api.authenticateSkyscape(username, password);
-            var accounts = api.getAccounts();
-
-            SnapshotViewModel snapshotViewModel = new SnapshotViewModel();
-            snapshotViewModel.skyscapeAccounts = new List<Account>();
-            snapshotViewModel.Vms = new List<QueryResultRecords>();
-            snapshotViewModel.vCloudAccounts = new Dictionary<int, Account>();
-            List<Dictionary<string, vCloudIdentifiers>> vCloudCredentials = new List<Dictionary<string, vCloudIdentifiers>>();
-            int vmId = 0;
-
-            //Deserializes JSON string into account objects
-            snapshotViewModel.skyscapeAccounts = JsonConvert.DeserializeObject<List<Account>>(accounts.Content);
-
-            //Loop through deserialized accounts
-            foreach (Account account in snapshotViewModel.skyscapeAccounts)
+            if (authenticate != null)
             {
-                Account vCloudAccount = new Account();
+                //vCloud API call to get XML containing VM info
+                var accounts = api.getAccounts();
+
+                //declare view models
+                SnapshotViewModel snapshotViewModel = new SnapshotViewModel();
+                snapshotViewModel.skyscapeAccounts = new List<Account>();
+                snapshotViewModel.Vms = new List<QueryResultRecords>();
+                snapshotViewModel.vCloudAccounts = new Dictionary<int, Account>();
+                List<Dictionary<string, vCloudIdentifiers>> vCloudCredentials = new List<Dictionary<string, vCloudIdentifiers>>();
+                int vmId = 0;
+
+                //Deserializes string into account objects
+                snapshotViewModel.skyscapeAccounts = JsonConvert.DeserializeObject<List<Account>>(accounts.Content);
+
+                //Loop through deserialized accounts
+                foreach (Account account in snapshotViewModel.skyscapeAccounts)
                 {
-                    vCloudAccount.vCloudToken = new Dictionary<string, int>();
-                    var vCloudCredentialObject = (JsonConvert.DeserializeObject<Dictionary<string, vCloudIdentifiers>>(api.getVCloudCreds(account.id).Content));
-                    vCloudCredentials.Add(vCloudCredentialObject);
-                    vCloudAccount.id = account.id;
-                    foreach (var vCloudCredential in vCloudCredentials)
+                    Account vCloudAccount = new Account();
                     {
-                        foreach (var key in vCloudCredential.Keys)
+                        //matches vCloud Account id to Account id
+                        vCloudAccount.vCloudToken = new Dictionary<string, int>();
+                        var vCloudCredentialObject = (JsonConvert.DeserializeObject<Dictionary<string, vCloudIdentifiers>>(api.getVCloudCreds(account.id).Content));
+                        vCloudCredentials.Add(vCloudCredentialObject);
+                        vCloudAccount.id = account.id;
+                        foreach (var vCloudCredential in vCloudCredentials)
                         {
-                            if (key.Contains(account.name) && !key.Contains("82f326"))
-                            {
-                                byte[] credentialsAsBytes = System.Text.Encoding.ASCII.GetBytes(vCloudCredential[key].username.ToString() + ":" + password);
-                                string encodedCredentials = Convert.ToBase64String(credentialsAsBytes);
-                                vCloudAccount.vCloudToken.Add(api.authenticateVCloud(encodedCredentials), account.id);
+                            foreach (var key in vCloudCredential.Keys)
+                            { //insert accounts credentials do not have access to here
+                                if (key.Contains(account.name) && !key.Contains("82f326"))
+                                {
+                                    byte[] credentialsAsBytes = System.Text.Encoding.ASCII.GetBytes(vCloudCredential[key].username.ToString() + ":" + password);
+                                    string encodedCredentials = Convert.ToBase64String(credentialsAsBytes);
+                                    vCloudAccount.vCloudToken.Add(api.authenticateVCloud(encodedCredentials), account.id);
+                                }
                             }
                         }
                     }
+                    //match accout id to account using dictionary
+                    snapshotViewModel.vCloudAccounts.Add(account.id, vCloudAccount);
                 }
-                snapshotViewModel.vCloudAccounts.Add(account.id, vCloudAccount);
-            }
-            foreach (var vCloudAccount in snapshotViewModel.vCloudAccounts.Values)
-            {
-                foreach (string vCloudToken in vCloudAccount.vCloudToken.Keys)
+                foreach (var vCloudAccount in snapshotViewModel.vCloudAccounts.Values)
                 {
-                    var vmsXml = api.getVCloudVms(vCloudToken).GetResponseStream();
-
-                    //To create snapshot objects, must loop through the different levels of XML using a streamreader
-                    var vmSerializer = new XmlSerializer(typeof(QueryResultRecords));
-                    using (var vmStreamReader = new StreamReader(vmsXml))
+                    foreach (string vCloudToken in vCloudAccount.vCloudToken.Keys)
                     {
-                        QueryResultRecords Vms = (QueryResultRecords)vmSerializer.Deserialize(vmStreamReader);
-                        Vms.vCloudId = vCloudAccount.id;
-                        snapshotViewModel.Vms.Add(Vms);
-                        foreach (var vm in Vms.VMRecord)
+                        var vmsXml = api.getVCloudVms(vCloudToken).GetResponseStream();
+
+                        //To create snapshot objects, must loop through the different levels of XML using a streamreader
+                        var vmSerializer = new XmlSerializer(typeof(QueryResultRecords));
+                        using (var vmStreamReader = new StreamReader(vmsXml))
                         {
-                            if (vm.CatalogName == null)
+                            //Deserialize into vm objects
+                            QueryResultRecords Vms = (QueryResultRecords)vmSerializer.Deserialize(vmStreamReader);
+                            Vms.vCloudId = vCloudAccount.id;
+                            snapshotViewModel.Vms.Add(Vms);
+                            foreach (var vm in Vms.VMRecord)
                             {
-                                var snapshotXml = api.getVCloudVmsSnapshots(vm.Href, vCloudToken).GetResponseStream();
-                                var snapshotSerializer = new XmlSerializer(typeof(SnapshotSection));
-                                using (var snapshotStreamReader = new StreamReader(snapshotXml))
+                                if (vm.CatalogName == null)
                                 {
-                                    SnapshotSection snapshot = (SnapshotSection)snapshotSerializer.Deserialize(snapshotStreamReader);
-                                    if (snapshot.Snapshot != null)
+                                    var snapshotXml = api.getVCloudVmsSnapshots(vm.Href, vCloudToken).GetResponseStream();
+                                    var snapshotSerializer = new XmlSerializer(typeof(SnapshotSection));
+                                    using (var snapshotStreamReader = new StreamReader(snapshotXml))
                                     {
-                                        vm.unofficialId = vmId;
-                                        vmId++;
-                                        vm.Snapshot = snapshot;
-                                        vm.Snapshot.Snapshot.SizeInGB = long.Parse(vm.Snapshot.Snapshot.Size) / 1073741824;
-                                        vm.Snapshot.Snapshot.accountId = vCloudAccount.vCloudToken[vCloudToken];
-                                        if (vm.Snapshot.Snapshot.Created.AddDays(3) < DateTime.Now.Date)
+                                        SnapshotSection snapshot = (SnapshotSection)snapshotSerializer.Deserialize(snapshotStreamReader);
+                                        if (snapshot.Snapshot != null)
                                         {
-                                            foreach (var account in snapshotViewModel.skyscapeAccounts)
+                                            vm.unofficialId = vmId;
+                                            vmId++;
+                                            vm.Snapshot = snapshot;
+                                            vm.Snapshot.Snapshot.SizeInGB = long.Parse(vm.Snapshot.Snapshot.Size) / 1073741824;
+                                            vm.Snapshot.Snapshot.accountId = vCloudAccount.vCloudToken[vCloudToken];
+                                            if (vm.Snapshot.Snapshot.Created.AddDays(3) < DateTime.Now.Date)
                                             {
-                                                if (account.id == vCloudAccount.id)
+                                                foreach (var account in snapshotViewModel.skyscapeAccounts)
                                                 {
-                                                    account.numberOldSnapshots++;
+                                                    if (account.id == vCloudAccount.id)
+                                                    {
+                                                        account.numberOldSnapshots++;
+                                                    }
                                                 }
                                             }
                                         }
@@ -223,17 +239,25 @@ namespace SkyDash.Controllers
                         }
                     }
                 }
+                return View(snapshotViewModel);
             }
-            return View(snapshotViewModel);
+            else { }
+            return RedirectToAction("Login", "Home");
+
         }
 
         [OutputCache(Duration = 180)]
         public ActionResult Login()
         {
             LoginViewModel viewModel = new LoginViewModel();
+            //remove session vairables in the event of logouut or return to login screen
             Session.Remove("SkyscapeUsername");
             Session.Remove("SkyscapePassword");
             return View(viewModel);
         }
+    }
+
+    internal class LoginViewModel
+    {
     }
 }

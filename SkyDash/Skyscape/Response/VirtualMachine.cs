@@ -7,7 +7,7 @@ namespace Skydash.Response
 {
     public class VirtualMachine
     {
-        //Get and Set VM properties to set instances ov VM objects
+        //Get and Set VM properties to set instances ov VM objects, matches with case sensitive JSON string
         [JsonProperty("_id")]
         public int Id { get; set; }
 
@@ -47,7 +47,8 @@ namespace Skydash.Response
                 return null;
             }
         }
-
+        //Gets and Sets VM properties
+        //JsonProperty used to link with properties in JSON string
         [JsonProperty("billedHoursPoweredOn")]
         public int? BilledHoursPoweredOn { get; set; }
 

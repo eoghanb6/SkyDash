@@ -56,14 +56,16 @@
     }
 }
 <h1 class="title">Snapshots</h1>
+    <!--Accordion to display Account names-->
 <div id="accordion">
     @foreach (var account in Model.skyscapeAccounts)
     {
+        //when there are old snapshots display how many and use red background
         if (account.numberOldSnapshots > 0)
         {
             <h3 class="account-name">@account.name<span class="backups-failed">Snapshots over 3 days old: @account.numberOldSnapshots</span></h3>
         }
-        else
+        else //if snapshots are not old, use green background
         {
             <h2 class="account-name">@account.name</h2>
         }
@@ -74,9 +76,11 @@
                 {
                     if (vm.Snapshot != null && vm.Snapshot.Snapshot.accountId == account.id)
                     {
+                        //Panel for each snapshot
                         <div class="col-md-2">
                             @if (vm.Snapshot.Snapshot.Created.AddDays(3) < DateTime.Now.Date)
                             {
+                                //red panel for old snapshot
                                 <div id="btn-@vm.unofficialId" class="col-md-2 panel-body-fail clickable">
                                     <ul class="no-bullet center">
                                         <li class="vm-name">@vm.Name</li>
@@ -86,6 +90,7 @@
                             }
                             else
                             {
+                                //green panel for snapshot
                                 <div id="btn-@vm.unofficialId" class="col-md-2 panel-body-success clickable">
                                     <ul class="no-bullet center">
                                         <li class="vm-name">@vm.Name</li>
@@ -94,6 +99,7 @@
                                 </div>
                             }
                         </div>
+                        //Dialog to be used to snapshot information - called using JQuery-UI
                         <div id="dialog-@vm.unofficialId" title="Snapshot Information">
                             <ul class="no-bullet">
                                 <li><h5>VM name:</h5> @vm.Name</li>

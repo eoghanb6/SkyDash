@@ -8,6 +8,7 @@ namespace SkyDash.Skyscape.Response
 {
     public class Account
     {
+        //uses Json property to link to JSON string
         [JsonProperty("name")]
         public string name { get; set; }
 

@@ -1,5 +1,4 @@
-﻿@model SkyDash.ViewModels.LoginViewModel
-@{
+﻿@{
     ViewBag.Title = "Login";
     Layout = "~/Views/Shared/Login_Layout.cshtml";
 }
@@ -7,9 +6,8 @@
     <meta charset="UTF-8">
     <title>Login Form</title>
 
-
+    <!--Login CSS below-->
     <link rel="stylesheet" href="Scripts/normalize.css">
-
     <style>
       /* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
  
@@ -78,10 +76,11 @@ input:focus { box-shadow: inset 0 -5px 45px rgba(100,100,100,0.4), 0 1px 1px rgb
 <body>
     <div class="login">
         <h1>Login</h1>
+        <!--Form POSTs username and password to PostLogin Controller to handle authentication-->
         @using (Html.BeginForm("PostLogin", "Home", FormMethod.Post))
         {
-            <input type="text" name="skyscapeUsername" placeholder="Username" required="required" />
-            <input type="password" name="skyscapePassword" placeholder="skyscapePassword" required="required" />
+            <input type="text" name="skyscapeUsername" placeholder="Email" required="required" />
+            <input type="password" name="skyscapePassword" placeholder="Password" required="required" />
             <button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
         }
     </div>

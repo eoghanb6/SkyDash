@@ -153,7 +153,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -161,9 +160,8 @@
     <Compile Include="Skyscape\Response\SkyscapeResponse.cs" />
     <Compile Include="Skyscape\Response\vCloudIdentifiers.cs" />
     <Compile Include="vCloud\Response\QueryResultRecords.cs" />
-    <Compile Include="vCloud\Response\SnapshotSection.cs" />
     <Compile Include="Skyscape\Response\User.cs" />
-    <Compile Include="Skyscape\Response\VDC.cs" />
+    <Compile Include="Skyscape\Response\vDC.cs" />
     <Compile Include="Skyscape\Response\VirtualApp.cs" />
     <Compile Include="Skyscape\Response\VirtualMachine.cs" />
     <Compile Include="Skyscape\Response\vOrg.cs" />

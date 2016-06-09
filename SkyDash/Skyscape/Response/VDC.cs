@@ -4,8 +4,10 @@ using System.Collections.Generic;
 
 namespace SkyDash.Skyscape.Response
 {
-    public class VDC
+    public class vDC
     {
+        //Gets and Sets vDC properties
+        //JsonProperty used to link with properties in JSON string
         [JsonProperty("name")]
         public string Name { get; set; }
 

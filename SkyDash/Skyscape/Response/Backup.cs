@@ -5,6 +5,8 @@ namespace Skydash.Response
 {
     public class Backup
     {
+        //Gets and Sets Backup properties
+        //JsonProperty used to link with properties in JSON string
         [JsonProperty("status")]
         public string Status { get; set; }
 
