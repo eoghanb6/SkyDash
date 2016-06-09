@@ -84,7 +84,7 @@ namespace SkyDash.Controllers
                     //To create VM objects, must loop through the different levels of JSON String
                     foreach (var vOrg in result.vOrgs)
                     {
-                        foreach (var vDC in vOrg.VDCs)
+                        foreach (var vDC in vOrg.vDCs)
                         {                            
                             foreach (var vApp in vDC.vApps)
                             {
@@ -148,7 +148,6 @@ namespace SkyDash.Controllers
             snapshotViewModel.skyscapeAccounts = new List<Account>();
             snapshotViewModel.Vms = new List<QueryResultRecords>();
             snapshotViewModel.vCloudAccounts = new Dictionary<int, Account>();
-            List<Dictionary<string, vCloudIdentifiers>> vCloudCredentials = new List<Dictionary<string, vCloudIdentifiers>>();
             int vmId = 0;
 
             //Deserializes JSON string into account objects
@@ -159,19 +158,24 @@ namespace SkyDash.Controllers
             {
                 Account vCloudAccount = new Account();
                 {
+                    vCloudAccount.vCloudCredentials = new List<Dictionary<string, vCloudIdentifiers>>();
                     vCloudAccount.vCloudToken = new Dictionary<string, int>();
                     var vCloudCredentialObject = (JsonConvert.DeserializeObject<Dictionary<string, vCloudIdentifiers>>(api.getVCloudCreds(account.id).Content));
-                    vCloudCredentials.Add(vCloudCredentialObject);
                     vCloudAccount.id = account.id;
-                    foreach (var vCloudCredential in vCloudCredentials)
+                    vCloudAccount.vCloudCredentials.Add(vCloudCredentialObject);
+                    foreach (var vCloudCredential in vCloudAccount.vCloudCredentials)
                     {
                         foreach (var key in vCloudCredential.Keys)
                         {
-                            if (key.Contains(account.name) && !key.Contains("82f326"))
+                            if (key.Contains("-" + account.id.ToString() + "-"))
                             {
                                 byte[] credentialsAsBytes = System.Text.Encoding.ASCII.GetBytes(vCloudCredential[key].username.ToString() + ":" + password);
                                 string encodedCredentials = Convert.ToBase64String(credentialsAsBytes);
-                                vCloudAccount.vCloudToken.Add(api.authenticateVCloud(encodedCredentials), account.id);
+                                string token = api.authenticateVCloud(encodedCredentials);
+                                if (token != null)
+                                {
+                                    vCloudAccount.vCloudToken.Add(token, account.id);
+                                }
                             }
                         }
                     }

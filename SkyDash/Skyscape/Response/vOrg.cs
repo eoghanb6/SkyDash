@@ -15,6 +15,6 @@ namespace SkyDash.Skyscape.Response
         public string Urn { get; set; }
 
         [JsonProperty("VDCs")]
-        public List<VDC> VDCs { get; set; }
+        public List<vDC> vDCs { get; set; }
     }
 }

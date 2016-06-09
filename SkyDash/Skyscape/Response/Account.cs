@@ -1,8 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SkyDash.Skyscape.Response
 {
@@ -19,6 +16,7 @@ namespace SkyDash.Skyscape.Response
         public int numberFailedBackups = 0;
         public int numberOldSnapshots = 0;
         public Dictionary<string, int> vCloudToken;
-        public Dictionary<string, vCloudIdentifiers> vCloudCredentials;
+        public List<Dictionary<string, vCloudIdentifiers>> vCloudCredentials;
+        public int serviceId;
     }
 }

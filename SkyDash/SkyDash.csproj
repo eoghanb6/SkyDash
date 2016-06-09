@@ -161,9 +161,8 @@
     <Compile Include="Skyscape\Response\SkyscapeResponse.cs" />
     <Compile Include="Skyscape\Response\vCloudIdentifiers.cs" />
     <Compile Include="vCloud\Response\QueryResultRecords.cs" />
-    <Compile Include="vCloud\Response\SnapshotSection.cs" />
     <Compile Include="Skyscape\Response\User.cs" />
-    <Compile Include="Skyscape\Response\VDC.cs" />
+    <Compile Include="Skyscape\Response\vDC.cs" />
     <Compile Include="Skyscape\Response\VirtualApp.cs" />
     <Compile Include="Skyscape\Response\VirtualMachine.cs" />
     <Compile Include="Skyscape\Response\vOrg.cs" />
@@ -245,13 +244,10 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Backups.cshtml" />
-    <Content Include="Views\ViewModel.cshtml" />
-    <Content Include="Views\VMview.cshtml" />
     <Content Include="Views\Home\Snapshots.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Shared\Login_Layout.cshtml" />

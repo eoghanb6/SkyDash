@@ -16,7 +16,7 @@ namespace SkyDash.Skyscape
             skyscapeClient.CookieContainer = new CookieContainer();
         }
         
-        public IRestResponse authenticateSkyscape(String email, String password)
+        public IRestResponse authenticateSkyscape(string email, string password)
         {
             var request = new RestRequest("authenticate", Method.POST);
             request.AddHeader("cache-control", "no-cache");
@@ -60,9 +60,17 @@ namespace SkyDash.Skyscape
             request.ContentType = "application/x-www-form-urlencoded";
             request.Accept = "Accept=text/html,application/xhtml+xml,application/*+xml;version=1.5,**;q=0.8";
             request.Headers.Add("authorization", "Basic " + encodedCredentials);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            string vCloudToken = response.Headers["x-vcloud-authorization"].ToString();
-            return vCloudToken;
+            try
+            {
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                string vCloudToken = response.Headers["x-vcloud-authorization"].ToString();
+                return vCloudToken;
+            }
+            catch
+            {
+                return null;
+            }
+            
         }
 
         public HttpWebResponse getVCloudVms(string token)
