@@ -1,5 +1,4 @@
-﻿using System;
-using RestSharp;
+﻿using RestSharp;
 using System.Net;
 
 namespace SkyDash.Skyscape

@@ -189,7 +189,6 @@ namespace SkyDash.Controllers
                                 {
                                     //Variable used to show non authenticated accounts in snapshot view
                                     account.hasAccess = false;
-
                                 }
                             }
                         }
