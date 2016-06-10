@@ -108,7 +108,14 @@
                         <div id="dialog-@vm.unofficialId" title="Snapshot Information">
                             <ul class="no-bullet">
                                 <li><h5>VM name:</h5> @vm.Name</li>
-                                <li><h5>Power status:</h5> @vm.Snapshot.Snapshot.PoweredOn</li>
+                                @if (vm.Snapshot.Snapshot.PoweredOn == "true")
+                                {
+                                    <li><h5>VM Power status: </h5>ON</li>
+                                }
+                                else
+                                {
+                                    <li><h5>VM Power status: </h5>OFF</li>
+                                }
                                 <li><h5>Snapshot size:</h5> @vm.Snapshot.Snapshot.SizeInGB GB</li>
                                 <li><h5>Date created:</h5> @vm.Snapshot.Snapshot.Created.ToString("g")</li>
                             </ul>
