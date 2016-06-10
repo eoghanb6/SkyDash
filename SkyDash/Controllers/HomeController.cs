@@ -14,7 +14,7 @@ using System.Xml.Serialization;
 namespace SkyDash.Controllers
 {
     public class HomeController : Controller
-    {
+    { 
         //Creates a cache of 240 seconds
         [OutputCache(Duration = 240)]
         //Action to check if authentication was successful
@@ -48,7 +48,7 @@ namespace SkyDash.Controllers
             //redirect user to login controller / view
             return RedirectToAction("Login", "Home");
         }
-
+        
 
         //Create the view for the Backups screen
         public ActionResult Backups()
@@ -185,22 +185,31 @@ namespace SkyDash.Controllers
                                 {
                                     vCloudAccount.vCloudToken.Add(token, account.id);
                                 }
+                                else
+                                {
+                                    //Variable used to show non authenticated accounts in snapshot view
+                                    account.hasAccess = false;
+
+                                }
                             }
                         }
                     }
                 }
+                //Match the account id and the vcloud account in the dictionary
                 snapshotViewModel.vCloudAccounts.Add(account.id, vCloudAccount);
             }
             foreach (var vCloudAccount in snapshotViewModel.vCloudAccounts.Values)
             {
                 foreach (string vCloudToken in vCloudAccount.vCloudToken.Keys)
                 {
+                    //pass vCloudToken into API call to get VMs
                     var vmsXml = api.getVCloudVms(vCloudToken).GetResponseStream();
 
                     //To create snapshot objects, must loop through the different levels of XML using a streamreader
                     var vmSerializer = new XmlSerializer(typeof(QueryResultRecords));
                     using (var vmStreamReader = new StreamReader(vmsXml))
                     {
+                        //Deserialize XML into VMs
                         QueryResultRecords Vms = (QueryResultRecords)vmSerializer.Deserialize(vmStreamReader);
                         Vms.vCloudId = vCloudAccount.id;
                         snapshotViewModel.Vms.Add(Vms);
@@ -208,6 +217,7 @@ namespace SkyDash.Controllers
                         {
                             if (vm.CatalogName == null)
                             {
+                                //if no catalog name for VM 
                                 var snapshotXml = api.getVCloudVmsSnapshots(vm.Href, vCloudToken).GetResponseStream();
                                 var snapshotSerializer = new XmlSerializer(typeof(SnapshotSection));
                                 using (var snapshotStreamReader = new StreamReader(snapshotXml))
@@ -215,17 +225,19 @@ namespace SkyDash.Controllers
                                     SnapshotSection snapshot = (SnapshotSection)snapshotSerializer.Deserialize(snapshotStreamReader);
                                     if (snapshot.Snapshot != null)
                                     {
+                                        //set up snapshot object if snapshot exists
                                         vm.unofficialId = vmId;
                                         vmId++;
                                         vm.Snapshot = snapshot;
                                         vm.Snapshot.Snapshot.SizeInGB = long.Parse(vm.Snapshot.Snapshot.Size) / 1073741824;
                                         vm.Snapshot.Snapshot.accountId = vCloudAccount.vCloudToken[vCloudToken];
-                                        if (vm.Snapshot.Snapshot.Created.AddDays(3) < DateTime.Now.Date)
+                                        if (vm.Snapshot.Snapshot.Created.AddDays(3) < DateTime.Now.Date) //check if snapshot is older than 3 days
                                         {
                                             foreach (var account in snapshotViewModel.skyscapeAccounts)
                                             {
                                                 if (account.id == vCloudAccount.id)
                                                 {
+                                                    //add 1 to count of old snapshots for this account
                                                     account.numberOldSnapshots++;
                                                 }
                                             }
@@ -243,6 +255,7 @@ namespace SkyDash.Controllers
         public ActionResult Login()
         {
             LoginViewModel viewModel = new LoginViewModel();
+            //remove session variables for logout
             Session.Remove("SkyscapeUsername");
             Session.Remove("SkyscapePassword");
             return View(viewModel);

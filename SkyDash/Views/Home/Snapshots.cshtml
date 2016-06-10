@@ -65,10 +65,15 @@
         {
             <h3 class="account-name">@account.name<span class="backups-failed">Snapshots over 3 days old: @account.numberOldSnapshots</span></h3>
         }
+        else if (account.hasAccess == false)
+        {
+            //Creates accordion when account has not got access to view snapshots for this account
+            <h4 class="account-name">@account.name<span class="snapshot-not-auth">Account not authorized for viewing snapshots</span></h4>
+        }
         else //if snapshots are not old, use green background
         {
             <h2 class="account-name">@account.name</h2>
-        }
+    }
         <div>
             @foreach (var vmItem in Model.Vms)
             {

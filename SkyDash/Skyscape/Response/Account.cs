@@ -19,5 +19,7 @@ namespace SkyDash.Skyscape.Response
         public Dictionary<string, int> vCloudToken;
         public List<Dictionary<string, vCloudIdentifiers>> vCloudCredentials;
         public int serviceId;
+        public bool hasAccess = true;
+
     }
 }

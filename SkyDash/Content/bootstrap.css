@@ -6918,6 +6918,12 @@ td.visible-print {
     color: #fff;
     font-size: 1.5vw;
 }
+#accordion span.snapshot-not-auth {
+    float: right;
+    background: #A9A9A9;
+    color: #fff;
+    font-size: 1.5vw;
+}
 
 .button-align-right {
     margin-left: 1vw;

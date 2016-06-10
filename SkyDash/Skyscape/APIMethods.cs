@@ -4,7 +4,7 @@ using System.Net;
 
 namespace SkyDash.Skyscape
 {
-    // This class contains all API calls made within application
+    //This class contains all API calls made within application
     //Headers generated within Postman
     public class APIMethods
     {
