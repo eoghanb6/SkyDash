@@ -173,7 +173,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\jquery-ui.css" />
     <Content Include="Content\themes\base\accordion.css" />
     <Content Include="Content\themes\base\all.css" />
@@ -216,10 +215,13 @@
     <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\PublishProfiles\SkyDash.pubxml" />
+    <None Include="Properties\PublishProfiles\SkyDash5.pubxml" />
+    <None Include="Properties\PublishProfiles\SkyDash6.pubxml" />
+    <None Include="Properties\PublishProfiles\SkyDash7.pubxml" />
+    <None Include="Properties\PublishProfiles\SkyDash8.pubxml" />
+    <None Include="Properties\PublishProfiles\SkyDash9.pubxml" />
+    <None Include="Properties\PublishProfiles\SkyDashh.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
